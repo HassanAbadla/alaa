@@ -1,0 +1,14 @@
+@font-face {
+  font-family: Roboto;
+  /* src: "https://fonts.googleapis.com/css?family=Tangerine"; */
+}
+
+@font-face {
+  font-family: Roboto;
+  /* src: url("/fonts/ArbFONTS-Droid-Arabic-Kufi-Bold.KCttf"); */
+  font-weight: bold;
+}
+
+* {
+  font-family: Roboto;
+}

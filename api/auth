@@ -1,0 +1,11 @@
+export function sendPasswordResetLink(payload, $axios) {
+  return $axios.post("send_password_reset_link", payload)
+}
+
+export function resetPassword(payload, $axios) {
+  return $axios.post("reset-password", payload)
+}
+
+export function checkTokenValidity(payload, $axios) {
+  return $axios.post("check-token", payload)
+}

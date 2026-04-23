@@ -1,0 +1,21 @@
+/* assets/global.css */
+.v-card__text,
+.v-card__title {
+  word-break: normal !important;
+  /* overflow-wrap: break-word !important; */
+}
+
+.bordered-table {
+  border: 1px solid rgb(180, 180, 180);
+  border-radius: 10px !important;
+}
+
+.no-hover-effect.v-btn::before {
+  opacity: 0 !important;
+}
+.no-hover-effect.v-btn:hover {
+  background-color: transparent !important;
+}
+.no-hover-effect.v-btn:active {
+  transform: none !important;
+}

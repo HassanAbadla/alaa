@@ -1,0 +1,77 @@
+.sl-vue-tree {
+  position: relative;
+  cursor: default;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+}
+
+.sl-vue-tree-root > .sl-vue-tree-nodes-list {
+  overflow: hidden;
+  position: relative;
+  padding: 8px;
+}
+
+.sl-vue-tree-selected > .sl-vue-tree-node-item {
+  background-color: rgba(230, 230, 230, 0.5);
+}
+
+.sl-vue-tree-node-list {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+
+.sl-vue-tree-node-item {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  border-radius: 6px;
+}
+.sl-vue-tree-node-item.sl-vue-tree-cursor-inside {
+  outline: 1px solid rgba(100, 100, 255, 0.5);
+}
+
+.sl-vue-tree-gap {
+  width: 30px;
+  min-height: 5px;
+}
+
+.sl-vue-tree-sidebar {
+  display: none;
+  margin-left: 0px;
+}
+
+.sl-vue-tree-cursor {
+  position: absolute;
+  border: 3px solid rgba(0, 73, 209, 0.5);
+  height: 3px;
+  width: 100%;
+}
+/* .sl-vue-tree-cursor .sl-vue-tree-cursor_before {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+} */
+.sl-vue-tree-cursor sl-vue-tree-cursor_after {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+}
+
+.sl-vue-tree-drag-info {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0.5;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  padding: 5px 10px;
+}

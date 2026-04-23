@@ -1,0 +1,45 @@
+// variables.scss
+
+// Define the Arabic font variable
+$arabic-font: "Cairo", sans-serif;
+$english-font: "Roboto", sans-serif;
+
+// Apply Cairo font to Arabic Unicode ranges regardless of app language
+@font-face {
+  font-family: "Arabic-Auto";
+  src: local("Cairo");
+  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+}
+
+// Global font stack that includes Arabic support
+html {
+  font-family: "Arabic-Auto", "Cairo", "Roboto", sans-serif;
+}
+
+.v-application {
+  font-family: "Arabic-Auto", "Cairo", "Roboto", sans-serif !important;
+
+  // Apply to all elements
+  * {
+    font-family: "Arabic-Auto", "Cairo", "Roboto", sans-serif !important;
+  }
+
+  // Specific table styling to ensure Arabic text renders correctly
+  .v-data-table th,
+  .v-data-table td {
+    font-family: "Arabic-Auto", "Cairo", "Roboto", sans-serif !important;
+  }
+}
+
+// Keep your existing Arabic-specific styles for when the app is in Arabic mode
+html[lang="ar"] {
+  font-family: $arabic-font !important;
+
+  .v-application {
+    font-family: $arabic-font !important;
+
+    * {
+      font-family: $arabic-font !important;
+    }
+  }
+}

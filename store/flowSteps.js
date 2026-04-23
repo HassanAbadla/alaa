@@ -1,0 +1,63 @@
+// store/flowSteps.js
+
+import { createCrudStore } from "~/utils/storeFactory"
+
+const config = {
+  endpoint: "flow_nodes",
+  entityName: "step",
+  entityNamePlural: "steps",
+  apiPlugin: "$axios",
+  primaryKey: "id",
+  numericFields: [],
+  transformRequest: (data) => data,
+  transformResponse: (data) => data,
+
+  // custom state
+  customState: {
+    userTypes: []
+  },
+
+  // Custom mutations
+  customMutations: {
+    SET_STEPS(state, steps) {
+      state.steps = steps
+    },
+    SET_CURRENT_STEP(state, step) {
+      state.currentStep = step
+    },
+    addStep(state, step) {
+      state.steps.push(step)
+    },
+    SET_USER_TYPES(state, userTypes) {
+      state.userTypes = userTypes
+    }
+  },
+
+  // override fetchWorkflows actions
+  customActions: {
+    async fetchWorkflowSteps({ commit }, id) {
+      const steps = await this.$axios.$get(`/flow_nodes/${id}`)
+      commit("SET_STEPS", steps.data)
+    },
+    // async fetchStepById({ commit }, id) {
+    //   const response = await this.$axios.$get(`/flow_nodes/${id}`)
+    //   commit("SET_CURRENT_STEP", response)
+    // },
+    async addStep({ commit }, step) {
+      const response = await this.$axios.$post("/flow_nodes", step)
+      commit("addStep", response)
+    },
+    async fetchUserTypes({ commit }) {
+      const response = await this.$axios.$get("/user-types")
+      commit("SET_USER_TYPES", response.data)
+    }
+  },
+
+  // custom getters
+  customGetters: {
+    getUserTypes(state) {
+      return state.userTypes
+    }
+  }
+}
+export default createCrudStore(config)
