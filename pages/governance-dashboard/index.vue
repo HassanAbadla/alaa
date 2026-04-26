@@ -34,7 +34,7 @@
         <v-card
           class="d-flex align-center"
           outlined
-          style="border-radius: 12px; padding: 20px; flex: 1; min-width: 0; height: 300px"
+          style="border-radius: 12px; padding: 20px; flex: 1; min-width: 0; min-height: 300px; height: auto"
         >
           <div
             :style="dividerBorderOnly"
@@ -152,7 +152,7 @@
         <v-card
           class="d-flex align-center"
           outlined
-          style="border-radius: 12px; padding: 20px; flex: 1; min-width: 0; height: 300px"
+          style="border-radius: 12px; padding: 20px; flex: 1; min-width: 0; min-height: 300px; height: auto"
         >
           <div
             :style="dividerBorderOnly"
@@ -278,7 +278,8 @@
             min-width: 180px;
             max-width: 220px;
             flex-shrink: 0;
-            height: 300px;
+            min-height: 300px;
+            height: auto;
             cursor: pointer;
             display: flex;
             flex-direction: column;
@@ -327,7 +328,7 @@
           <v-card
             class="d-flex flex-column align-center justify-center"
             outlined
-            style="border-radius: 12px; padding: 16px; width: 100%; height: 350px"
+            style="border-radius: 12px; padding: 16px; width: 100%; min-height: 350px; height: auto"
           >
             <div class="text-h6 text-center mb-4" style="color: #232757">{{ $t("page.assets_by_location") }}</div>
             <div style="height: 280px; width: 100%; display: flex; align-items: center; justify-content: center">
@@ -345,7 +346,7 @@
           <v-card
             class="d-flex flex-column"
             outlined
-            style="border-radius: 12px; padding: 16px; width: 100%; height: 350px"
+            style="border-radius: 12px; padding: 16px; width: 100%; height: 350px; overflow: hidden"
           >
             <div class="text-h6 text-center mb-4" style="margin-top: 8px; flex-shrink: 0; color: #232757">
               {{ $t("page.top_5_assets_by_cost") }}
@@ -436,7 +437,7 @@
           <v-card
             class="d-flex flex-column align-center justify-center"
             outlined
-            style="border-radius: 12px; padding: 8px; width: 100%; height: 350px"
+            style="border-radius: 12px; padding: 8px; width: 100%; min-height: 350px; height: auto"
           >
             <div class="text-h6 text-center mb-4" style="color: #232757">
               {{ $t("page.policies_by_expiry_date") }}
@@ -932,7 +933,9 @@ export default {
           y: {
             beginAtZero: true,
             ticks: {
-              precision: 0
+              precision: 0,
+              font: { size: 12 },
+              color: "#333"
             },
             grid: {
               color: "#f0f0f0",
@@ -942,6 +945,10 @@ export default {
           x: {
             grid: {
               display: false
+            },
+            ticks: {
+              font: { size: 12 },
+              color: "#333"
             }
           }
         },

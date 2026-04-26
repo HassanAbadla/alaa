@@ -1722,12 +1722,17 @@ export default {
   }
 }
 
-@media (min-width: 1264px) and (max-width: 1599px) {
+@media (min-width: 1264px) and (max-width: 1499px) {
   .cards-grid-fixed {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
+@media (min-width: 1500px) {
+  .cards-grid-fixed {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
 @media (min-width: 1600px) {
   .cards-grid-fixed {
     grid-template-columns: repeat(5, 1fr);
