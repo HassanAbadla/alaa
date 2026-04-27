@@ -64,7 +64,15 @@
             </div>
             <div
               class="text-h2 font-weight-bold"
-              style="line-height: 1.2; white-space: nowrap; color: #54689d; margin-top: 45px"
+              style="
+                line-height: 1.2;
+                white-space: nowrap;
+                color: #54689d;
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              "
             >
               {{ totalAssets }}
             </div>
@@ -182,7 +190,15 @@
             </div>
             <div
               class="text-h2 font-weight-bold"
-              style="line-height: 1.2; white-space: nowrap; color: #54689d; margin-top: 45px"
+              style="
+                line-height: 1.2;
+                white-space: nowrap;
+                color: #54689d;
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              "
             >
               {{ totalPolicies }}
             </div>
@@ -267,13 +283,12 @@
         </v-card>
 
         <!-- Sensitive Assets Card -->
-
         <v-card
           class="d-flex flex-column"
           outlined
           style="
             border-radius: 12px;
-            padding: 20px 20px 0px 20px; /* padding-bottom = 0 */
+            padding: 20px 20px 0px 20px;
             width: calc(50% - 12px);
             min-width: 180px;
             max-width: 220px;
@@ -286,24 +301,25 @@
           "
           @click="goToSensitiveAssets"
         >
-          <!-- Top: Title + Count -->
-          <div>
-            <div
-              class="text-h6 text-center mb-4 text-center"
-              style="
-                margin-bottom: 40px;
-                display: inline-block;
-                border-bottom: 2px solid #e2e8f0;
-                padding-bottom: 5px;
-                white-space: nowrap;
-                color: #232757;
-              "
-            >
-              {{ $t("page.sensitive_assets") }}
-            </div>
+          <!-- Title stays at top -->
+          <div
+            class="text-h6 text-center"
+            style="
+              display: inline-block;
+              border-bottom: 2px solid #e2e8f0;
+              padding-bottom: 5px;
+              white-space: nowrap;
+              color: #232757;
+            "
+          >
+            {{ $t("page.sensitive_assets") }}
+          </div>
+
+          <!-- Number centered in remaining space -->
+          <div style="flex: 1; display: flex; align-items: center; justify-content: center">
             <div
               class="text-h2 font-weight-bold text-center"
-              style="color: #54689d; line-height: 1.2; white-space: nowrap; margin-top: 45px"
+              style="line-height: 1.2; white-space: nowrap; color: #54689d"
             >
               {{ sensitiveAssetsCount }}
             </div>
