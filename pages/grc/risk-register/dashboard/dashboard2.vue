@@ -40,8 +40,8 @@
 
   <!-- Top Threats and Exposure -->
   <v-col cols="12" sm="6" md="3" lg="3">
-    <v-card class="pa-4" outlined style="border-radius: 12px; min-height: 355px; height: auto; display: flex; flex-direction: column; position: relative;">
-      <div class="text-h6 text-center mb-4" style="color: #232757">{{ $t("page.top_threats_and_exposure") }}</div>
+   <v-card class="pa-4" outlined style="border-radius: 12px; min-height: 355px; max-height: 355px; height: 355px; display: flex; flex-direction: column; position: relative; overflow: hidden;">
+    <div class="text-h6 text-center mb-4"style="color: #232757">{{ $t("page.top_threats_and_exposure") }}</div>
       <v-simple-table dense style="background-color: white; table-layout: fixed; width: 100%; flex: 1; overflow-y: auto; max-height: 280px;">
         <colgroup>
           <col style="width: 33.33%" />
@@ -80,7 +80,7 @@
 
   <!-- Total Risks by Likelihood -->
   <v-col cols="12" sm="6" md="3" lg="3">
-    <v-card class="pa-4" outlined style="border-radius: 12px; min-height: 355px; height: auto; position: relative;">
+  <v-card class="pa-4" outlined style="border-radius: 12px; height: 355px; position: relative; overflow: hidden;">
       <div class="text-h6 text-center mb-4" style="color: #232757">{{ $t("page.total_risks_by_liklihood") }}</div>
       <Chart
         :type="'bar'"
@@ -98,7 +98,7 @@
 
   <!-- Total Risks by Impact -->
   <v-col cols="12" sm="6" md="3" lg="3">
-    <v-card class="pa-4" outlined style="border-radius: 12px; min-height: 355px; height: auto; position: relative;">
+    <v-card class="pa-4" outlined style="border-radius: 12px; height: 355px; position: relative; overflow: hidden;">
       <div class="text-h6 text-center mb-4" style="color: #232757">{{ $t("page.total_risks_by_impact") }}</div>
       <Chart
         :type="'bar'"
@@ -116,7 +116,7 @@
 
   <!-- Risks by Status -->
   <v-col cols="12" sm="6" md="3" lg="3">
-    <v-card class="pa-6" outlined style="border-radius: 12px; min-height: 355px; height: auto; position: relative; padding: 24px;">
+  <v-card class="pa-4" outlined style="border-radius: 12px; height: 355px; position: relative; overflow: hidden;">
       <div class="text-h6 text-center mb-4" style="color: #232757">{{ $t("page.risks_by_status") }}</div>
 
       <div class="d-flex" style="height: calc(100% - 70px); align-items: center;">
@@ -167,7 +167,7 @@
 
   <!-- Risk by Unit -->
   <v-col cols="12" md="3">
-    <v-card class="pa-6" outlined style="border-radius: 12px; min-height: 355px; height: auto; position: relative;">
+  <v-card class="pa-4" outlined style="border-radius: 12px; min-height: 355px; height: 355px; position: relative; overflow: hidden;">
       <div class="text-h6 text-center mb-4" style="color: #232757">
         {{ $t("page.risk_by_unit") }}
       </div>
@@ -211,9 +211,30 @@
 
   <!-- Risk Treatment Effect -->
   <v-col cols="12" md="6">
-    <v-card class="pa-4" outlined style="border-radius: 12px; min-height: 355px; height: auto;">
-      <div class="text-h6 text-center mb-4" style="color: #232757">{{ $t("page.risk_treatment_effect") }}</div>
-      <div style="height: 275px; width: 100%; position: relative">
+  <v-card class="pa-4" outlined style="border-radius: 12px; height: 355px; position: relative; overflow: hidden;">
+      <div class="text-h6 text-center mb-3" style="color: #232757">{{ $t("page.risk_treatment_effect") }}</div>
+        <v-row justify="center" class="mt-1 mb-3">
+  <div class="grc-legend">
+    
+    <div 
+      class="legend-item"
+      @click="showInherent = !showInherent"
+      :style="{ opacity: showInherent ? 1 : 0.4, cursor: 'pointer' }"
+    >
+      <span class="dot inherent"></span> Inherent
+    </div>
+
+    <div 
+      class="legend-item"
+      @click="showResidual = !showResidual"
+      :style="{ opacity: showResidual ? 1 : 0.4, cursor: 'pointer' }"
+    >
+      <span class="dot residual"></span> Residual
+    </div>
+
+  </div>
+</v-row>
+      <div  style="height: calc(100% - 90px); width: 100%; position: relative">
         <Chart
           :type="'bar'"
           :chart-data="overallResidualChartData"
@@ -227,7 +248,7 @@
 
   <!-- Risk Area (Scope of Risk) -->
   <v-col cols="12" md="3">
-    <v-card class="pa-6" outlined style="border-radius: 12px; min-height: 355px; height: auto; position: relative;">
+<v-card class="pa-4" outlined style="border-radius: 12px; min-height: 355px; height: 355px; position: relative; overflow: hidden;">
       <div class="text-h6 text-center mb-4" style="color: #232757">
         {{ $t("table.risk_area") }}
       </div>
@@ -282,7 +303,7 @@
     <v-row dense class="mt-2">
      <!-- Risk by Asset Type -->
 <v-col cols="12" md="3">
-  <v-card class="pa-6" outlined style="border-radius: 12px; height: 355px; position: relative;">
+<v-card class="pa-4" outlined style="border-radius: 12px; height: 355px; position: relative; overflow: hidden;">
     <!-- Title -->
     <div class="text-h6 text-center mb-4" style="color: #232757">
       {{ $t("page.risk_by_asset_type") }}
@@ -334,7 +355,7 @@
 
       <!-- Upcoming Risk Treatment Deadlines (Next 5 Days) -->
       <v-col cols="12" md="6">
-        <v-card class="pa-4" outlined style="border-radius: 12px; height: 355px">
+       <v-card class="pa-4" outlined style="border-radius: 12px; height: 355px; position: relative; overflow: hidden;">
           <div class="text-h6 text-center mb-4"style="color: #232757">{{ $t("page.risk_treatment_deadline") }}</div>
           <chart
             :type="'scatter'"
@@ -348,7 +369,7 @@
 
       <!-- Top 5 Risks Identified and Exposure -->
       <v-col cols="12" sm="6" md="6" lg="3">
-        <v-card class="pa-4" outlined style="border-radius: 12px; height: 355px; display: flex; flex-direction: column;">
+        <v-card class="pa-4" outlined style="border-radius: 12px; min-height: 355px; max-height: 355px; height: 355px; display: flex; flex-direction: column; position: relative; overflow: hidden;">
           <div class="text-h6 text-center mb-4"style="color: #232757">{{ $t("page.top_5_risks_identified_and_exposure") }}</div>
           <v-simple-table dense style="background-color: white; table-layout: fixed; width: 100%; flex: 1; overflow-y: auto; max-height: 280px;">
             <colgroup>
@@ -441,7 +462,7 @@
  
  <!-- Risk by Owner -->
 <v-col cols="12" md="3" style="display: flex;">
-  <v-card class="pa-6" outlined style="border-radius: 12px; width: 100%; display: flex; flex-direction: column; position: relative;">
+  <v-card class="pa-4" outlined style="border-radius: 12px; width: 100%; display: flex; flex-direction: column; position: relative;">
     <div class="text-h6 text-center mb-4" style="color: #232757">
       {{ $t("page.risk_by_owner") }}
     </div>
@@ -547,7 +568,9 @@ export default {
       loading: true,
       loadingHeatmap: false,
       heatmapDataLoaded: false,
-      logo: require("@/assets/img/logo-sw1.svg")
+      logo: require("@/assets/img/logo-sw1.svg"),
+      showInherent: true,
+    showResidual: true
     }
   },
   computed: {
@@ -1020,46 +1043,36 @@ export default {
       }
     },
 
-    overallResidualChartData() {
-      const inherentNames = this.stats?.inherent?.map((r) => r.name) || []
-      const inherentData = this.stats?.inherent?.map((r) => r.count) || []
-      const residualData = this.stats?.residual?.map((r) => r.count) || []
-      const inherent = this.stats?.inherent || []
-      const residual = this.stats?.residual || []
+   overallResidualChartData() {
+  const inherentData = this.stats?.inherent?.map((r) => r.count) || []
+  const residualData = this.stats?.residual?.map((r) => r.count) || []
+  const labels = this.stats?.inherent?.map((r) => r.name) || []
 
-      const labels = inherent.map((r) => r.name)
+  const datasets = []
 
-    //  const inherentIds = {}
-      //const residualIds = {}
+  if (this.showInherent) {
+    datasets.push({
+      label: "Inherent",
+      data: inherentData,
+      backgroundColor: "#232757",
+      borderWidth: 0
+    })
+  }
 
-      // inherent.forEach((r) => {
-      //   inherentIds[r.name] = r.id
-      // })
+  if (this.showResidual) {
+    datasets.push({
+      label: "Residual",
+      data: residualData,
+      backgroundColor: "#54689d",
+      borderWidth: 0
+    })
+  }
 
-      // residual.forEach((r) => {
-      //   residualIds[r.name] = r.id
-      // })
-      return {
-        labels: inherentNames,
-        // inherentIds,
-        // residualIds,
-        datasets: [
-          {
-            label: "Inherent",
-            data: inherentData,
-            backgroundColor: "#232757",
-            borderWidth: 0
-          },
-          {
-            label: "Residual",
-            data: residualData,
-            backgroundColor: "#54689d",
-            borderWidth: 0
-          }
-        ]
-      }
-    },
-
+  return {
+    labels,
+    datasets
+  }
+},
     overallResidualChartOptions() {
       //const self = this
       return {
@@ -1098,7 +1111,7 @@ export default {
         },
         plugins: {
           legend: {
-            display: true,
+            display: false,
             position: "top",
             labels: {
               font: {
@@ -2363,5 +2376,32 @@ export default {
 .heatmap-wrapper > * {
   max-width: 100%;
   height: auto;
+}
+.grc-legend {
+  display: flex;
+  gap: 20px;
+  font-size: 13px;
+  align-items: center;
+  justify-content: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 20px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.inherent {
+  background-color: #232757;
+}
+
+.residual {
+  background-color: #54689d;
 }
 </style>

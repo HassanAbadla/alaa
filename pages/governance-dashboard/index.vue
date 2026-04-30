@@ -301,7 +301,7 @@
           "
           @click="goToSensitiveAssets"
         >
-          <!-- Title stays at top -->
+          <!-- Title -->
           <div
             class="text-h6 text-center"
             style="

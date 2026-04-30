@@ -136,7 +136,28 @@
             <!-- Tasks by GRC Domain -->
             <v-col cols="12" md="8">
               <v-card class="pa-4 d-flex flex-column align-center" outlined style="height: 340px; border-radius: 12px">
-                <div class="text-h6 text-center mb-2" style="color: #232757">{{ $t("page.tasks_by_grc_domain") }}</div>
+                <div class="text-h6 text-center mb-3" style="color: #232757">
+                  {{ $t("page.tasks_by_grc_domain") }}
+                </div>
+
+                <!-- GRC Legend -->
+                <v-row justify="center" class="mt-1 mb-3">
+                  <div class="grc-legend">
+                    <div class="legend-item">
+                      <span class="dot governance"></span>
+                      Governance
+                    </div>
+                    <div class="legend-item">
+                      <span class="dot risk"></span>
+                      Risk
+                    </div>
+                    <div class="legend-item">
+                      <span class="dot compliance"></span>
+                      Compliance
+                    </div>
+                  </div>
+                </v-row>
+
                 <Chart
                   :type="'bar'"
                   :chart-data="tasksDomainChartData"
@@ -146,7 +167,6 @@
                 />
               </v-card>
             </v-col>
-
             <!-- Tasks by Status -->
             <v-col cols="12" md="4">
               <v-card
@@ -374,44 +394,13 @@ export default {
     tasksDomainChartData() {
       const data = this.dashboardStats.tasks_by_domain || []
 
-      const generateGradient = (color1, color2, count) => {
-        const hexToRgb = (hex) => {
-          const hexColor = hex.replace("#", "")
-          const r = parseInt(hexColor.substr(0, 2), 16)
-          const g = parseInt(hexColor.substr(2, 2), 16)
-          const b = parseInt(hexColor.substr(4, 2), 16)
-          return { r, g, b }
-        }
-
-        const rgbToHex = (r, g, b) => {
-          return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b
-            .toString(16)
-            .padStart(2, "0")}`
-        }
-
-        const startColor = hexToRgb(color1)
-        const endColor = hexToRgb(color2)
-
-        const colors = []
-
-        if (count === 1) {
-          return [color1]
-        }
-
-        for (let i = 0; i < count; i++) {
-          const ratio = i / (count - 1)
-
-          const r = Math.round(startColor.r + (endColor.r - startColor.r) * ratio)
-          const g = Math.round(startColor.g + (endColor.g - startColor.g) * ratio)
-          const b = Math.round(startColor.b + (endColor.b - startColor.b) * ratio)
-
-          colors.push(rgbToHex(r, g, b))
-        }
-
-        return colors
+      const DOMAIN_COLORS = {
+        Policy: "#232757",
+        Risk: "#eaa035",
+        Treatment: "#eaa035",
+        Audit: "#7ab541",
+        "Audit Item": "#7ab541"
       }
-
-      const gradientColors = generateGradient("#232757", "#54689d", data.length)
 
       return {
         labels: data.map((i) => i.name || "Unknown"),
@@ -419,7 +408,9 @@ export default {
           {
             label: "Total Tasks",
             data: data.map((i) => i.count || 0),
-            backgroundColor: gradientColors,
+            backgroundColor: data.map((i) => {
+              return DOMAIN_COLORS[i.name] || "#54689d"
+            }),
             borderRadius: 6,
             barPercentage: 0.7,
             categoryPercentage: 0.8
@@ -828,11 +819,41 @@ export default {
 </script>
 <style scoped>
 .legend-item {
-  cursor: pointer;
+  cursor: default;
   transition: opacity 0.2s ease;
 }
 
 .legend-item:hover {
   opacity: 0.7;
+}
+.grc-legend {
+  display: flex;
+  gap: 20px;
+  font-size: 13px;
+  align-items: center;
+  justify-content: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.dot {
+  width: 20px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.governance {
+  background-color: #232757;
+}
+
+.risk {
+  background-color: #eaa035;
+}
+
+.compliance {
+  background-color: #7ab541;
 }
 </style>
