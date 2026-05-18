@@ -338,23 +338,36 @@
         </v-card>
       </div>
 
-      <div style="display: flex; gap: 8px; width: 100%">
-        <div style="display: flex; flex-direction: column; flex: 1; min-width: 0; gap: 8px">
+      <div style="display: flex; gap: 8px; width: 100%; height: 750px">
+        <div style="display: flex; flex-direction: column; flex: 1; min-width: 0; gap: 8px; height: 100%">
           <!-- Assets by Location  -->
           <v-card
-            class="d-flex flex-column align-center justify-center"
+            class="d-flex flex-column"
             outlined
-            style="border-radius: 12px; padding: 16px; width: 100%; min-height: 350px; height: auto"
+            style="border-radius: 12px; padding: 16px; width: 100%; height: 350px"
           >
-            <div class="text-h6 text-center mb-4" style="color: #232757">{{ $t("page.assets_by_location") }}</div>
-            <div style="height: 280px; width: 100%; display: flex; align-items: center; justify-content: center">
-              <Chart
-                :type="'bar'"
-                :chart-data="locationAssetsChartData"
-                :chart-options="locationAssetsChartOptions"
-                :chart-height="'280px'"
-                :chart-width="'100%'"
-              />
+            <div class="text-h6 text-center mb-4" style="color: #232757; flex-shrink: 0">
+              {{ $t("page.assets_by_location") }}
+            </div>
+
+            <!--  scrollable container — same as tasks chart -->
+            <div style="flex: 1; overflow-y: auto; min-height: 0">
+              <!-- dynamic height — 40px per bar so each bar is thick -->
+              <div
+                :style="{
+                  height: locationAssetsChartData.labels.length * 40 + 'px',
+                  minHeight: '200px',
+                  width: '100%'
+                }"
+              >
+                <Chart
+                  :type="'bar'"
+                  :chart-data="locationAssetsChartData"
+                  :chart-options="locationAssetsChartOptions"
+                  :chart-height="'100%'"
+                  :chart-width="'100%'"
+                />
+              </div>
             </div>
           </v-card>
 
@@ -362,98 +375,119 @@
           <v-card
             class="d-flex flex-column"
             outlined
-            style="border-radius: 12px; padding: 16px; width: 100%; height: 350px; overflow: hidden"
+            style="border-radius: 12px; padding: 16px; width: 100%; height: 350px; flex-shrink: 0; overflow: hidden"
           >
             <div class="text-h6 text-center mb-4" style="margin-top: 8px; flex-shrink: 0; color: #232757">
               {{ $t("page.top_5_assets_by_cost") }}
             </div>
 
-            <v-simple-table style="width: 100%; flex: 1; overflow-y: auto">
-              <template v-slot:default>
+            <div style="flex: 1; overflow-y: auto; border-radius: 8px; overflow: hidden">
+              <table style="width: 100%; border-collapse: collapse; font-size: 12px">
                 <thead>
-                  <tr>
-                    <th
-                      class="text-center text-subtitle-1 font-weight-bold white--text"
-                      style="
-                        padding: 10px;
-                        border-bottom: 1px solid #e2e8f0;
-                        background-color: #232757;
-                        border-right: 1px solid white;
-                        white-space: nowrap;
-                      "
-                    >
+                  <tr style="background-color: #232757">
+                    <th style="text-align: left; padding: 8px 10px; font-size: 16px; font-weight: 500; color: white">
                       {{ $t("table.assets") }}
                     </th>
-                    <th
-                      class="text-center text-subtitle-1 font-weight-bold white--text"
-                      style="
-                        padding: 14px;
-                        border-bottom: 1px solid #e2e8f0;
-                        background-color: #232757;
-                        border-right: 1px solid white;
-                        white-space: nowrap;
-                      "
-                    >
-                      {{ $t("table.cost") + " (SAR)" }}
+                    <th style="text-align: center; padding: 8px 10px; font-size: 16px; font-weight: 500; color: white">
+                      {{ $t("table.cost") }} (SAR)
                     </th>
-                    <th
-                      class="text-center text-subtitle-1 font-weight-bold white--text"
-                      style="
-                        padding: 14px;
-                        border-bottom: 1px solid #e2e8f0;
-                        background-color: #232757;
-                        white-space: nowrap;
-                      "
-                    >
+                    <th style="text-align: right; padding: 8px 10px; font-size: 16px; font-weight: 500; color: white">
                       {{ $t("table.status") }}
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="asset in topAssets" :key="asset.name">
-                    <td
-                      class="text-center text-body-1"
-                      style="
-                        padding: 12px;
-                        border-bottom: 1px solid #f1f1f1;
-                        border-right: 1px solid #f1f1f1;
-                        white-space: nowrap;
-                        color: #232757;
-                      "
-                    >
-                      {{ asset.name }}
+                  <tr
+                    v-for="(asset, index) in topAssets"
+                    :key="asset.name"
+                    :style="{
+                      borderBottom: '1px solid #f0f0f0',
+                      transition: 'background 0.15s',
+                      background: index % 2 !== 0 ? '#f5f7fb' : 'white'
+                    }"
+                    @mouseover="$event.currentTarget.style.background = '#e8ecf5'"
+                    @mouseleave="$event.currentTarget.style.background = index % 2 !== 0 ? '#f5f7fb' : 'white'"
+                  >
+                    <td style="padding: 8px 10px">
+                      <div style="display: flex; align-items: center; gap: 8px">
+                        <span
+                          :style="{
+                            width: '9px',
+                            height: '9px',
+                            borderRadius: '50%',
+                            flexShrink: 0,
+                            display: 'inline-block',
+                            background:
+                              index === 0
+                                ? '#e24b4a'
+                                : index === 1
+                                ? '#e24b4a'
+                                : index === 2
+                                ? '#eaa035'
+                                : index === 3
+                                ? '#eaa035'
+                                : '#7ab541'
+                          }"
+                        ></span>
+                        <span
+                          style="
+                            font-weight: 500;
+                            color: #232757;
+                            font-size: 14px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            max-width: 90px;
+                          "
+                        >
+                          {{ asset.name }}
+                        </span>
+                      </div>
                     </td>
                     <td
-                      class="text-center text-body-1"
-                      style="
-                        padding: 12px;
-                        border-bottom: 1px solid #f1f1f1;
-                        border-right: 1px solid #f1f1f1;
-                        white-space: nowrap;
-                        color: #232757;
-                      "
+                      style="padding: 8px 10px; text-align: center; color: #54689d; font-weight: 500; font-size: 14px"
                     >
                       {{ formatCurrency(asset.cost) }}
                     </td>
-                    <td
-                      class="text-center text-body-1"
-                      style="padding: 12px; border-bottom: 1px solid #f1f1f1; white-space: nowrap; color: #232757"
-                    >
-                      {{ asset.status }}
+                    <td style="padding: 8px 10px; text-align: right">
+                      <span
+                        :style="{
+                          display: 'inline-block',
+                          padding: '2px 8px',
+                          borderRadius: '20px',
+                          fontSize: '14px',
+                          fontWeight: '500',
+                          background:
+                            String(asset.status).toLowerCase() === 'active' ||
+                            String(asset.status).toLowerCase() === 'operational'
+                              ? '#eaf3de'
+                              : String(asset.status).toLowerCase() === 'inactive'
+                              ? '#fde8e8'
+                              : '#faeeda',
+                          color:
+                            String(asset.status).toLowerCase() === 'active' ||
+                            String(asset.status).toLowerCase() === 'operational'
+                              ? '#27500a'
+                              : String(asset.status).toLowerCase() === 'inactive'
+                              ? '#a32d2d'
+                              : '#633806'
+                        }"
+                      >
+                        {{ asset.status }}
+                      </span>
                     </td>
                   </tr>
                 </tbody>
-              </template>
-            </v-simple-table>
+              </table>
+            </div>
           </v-card>
         </div>
-
-        <div style="display: flex; flex-direction: column; flex: 2; min-width: 0; gap: 8px">
+        <div style="display: flex; flex-direction: column; flex: 2; min-width: 0; gap: 8px; height: 100%">
           <!-- Recent and Upcoming Policy Expirations -->
           <v-card
             class="d-flex flex-column align-center justify-center"
             outlined
-            style="border-radius: 12px; padding: 8px; width: 100%; min-height: 350px; height: auto"
+            style="border-radius: 12px; padding: 8px; width: 100%; height: 350px; min-height: 0"
           >
             <div class="text-h6 text-center mb-4" style="color: #232757">
               {{ $t("page.policies_by_expiry_date") }}
@@ -484,7 +518,7 @@
           </v-card>
 
           <!-- Assets by Custodian and Assets by Category -->
-          <div style="display: flex; gap: 8px; width: 100%; height: 350px">
+          <div style="display: flex; gap: 8px; width: 100%; height: 350px; flex-shrink: 0">
             <!-- Assets by Custodian -->
             <v-card
               class="d-flex flex-column align-center justify-center"
@@ -1050,9 +1084,10 @@ export default {
             label: "Number of Assets",
             data: data,
             backgroundColor: finalColors,
-            borderColor: finalColors.map((color) => lighten(color, -15)),
+            borderColor: "transparent",
             borderWidth: 0,
-            maxBarThickness: 30,
+            //maxBarThickness: 30,
+            borderRadius: 4,
             hoverBackgroundColor: colors
           }
         ]
@@ -1062,42 +1097,12 @@ export default {
       return {
         responsive: true,
         maintainAspectRatio: false,
-        scales: {
-          y: {
-            display: true,
-            beginAtZero: true,
-            ticks: {
-              stepSize: 1,
-              //color: "#232757",
-              font: {
-                size: 12
-              }
-            },
-            grid: {
-              color: "#e0e0e0",
-              drawBorder: false
-            }
-          },
-          x: {
-            display: true,
-            ticks: {
-              // color: "#232757",
-              font: {
-                size: 12
-              }
-              //maxRotation: 45,
-              // minRotation: 45
-            },
-            grid: {
-              display: false
-            }
-          }
-        },
+
+        // FORCE vertical chart
+        indexAxis: "x",
+
         plugins: {
           legend: {
-            display: false
-          },
-          datalabels: {
             display: false
           },
           tooltip: {
@@ -1112,24 +1117,70 @@ export default {
               title: (tooltipItems) => {
                 return `Asset Custodian: ${tooltipItems[0].label}`
               }
+            },
+            backgroundColor: "rgba(0, 0, 0, 0.8)",
+            titleColor: "#fff",
+            bodyColor: "#fff",
+            borderColor: "#232757",
+            borderWidth: 1
+          },
+          datalabels: {
+            display: false
+          }
+        },
+
+        scales: {
+          // LABELS ARE HERE (X AXIS)
+          x: {
+            ticks: {
+              autoSkip: false,
+              maxRotation: 0,
+              minRotation: 0,
+              padding: 8,
+              font: { size: 11 },
+              color: "#333",
+
+              callback: function (value) {
+                const label = this.getLabelForValue(value) || ""
+
+                // shorten long labels
+                return label.length > 7 ? label.substring(0, 7) + "…" : label
+              }
+            },
+            grid: {
+              display: false
+            }
+          },
+
+          // values axis
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1,
+              font: { size: 12 },
+              color: "#333"
+            },
+            grid: {
+              display: true,
+              color: "rgba(0, 0, 0, 0.1)",
+              drawBorder: false
             }
           }
         },
+
         elements: {
           bar: {
-            borderWidth: 0,
-            borderRadius: {
-              topLeft: 4,
-              topRight: 4
-            },
-            borderSkipped: "bottom"
+            borderRadius: 4
           }
         },
-        datasets: {
-          bar: {
-            barPercentage: 0.6,
-            categoryPercentage: 0.8
-          }
+
+        animation: {
+          duration: 1000,
+          easing: "easeOutQuart"
+        },
+
+        layout: {
+          padding: { left: 5, right: 5, top: 10, bottom: 10 }
         }
       }
     },
@@ -1303,8 +1354,12 @@ export default {
         locationCounts[locationName] = (locationCounts[locationName] || 0) + 1
       })
 
-      const labels = Object.keys(locationCounts)
-      const data = Object.values(locationCounts)
+      const sortedLocations = Object.entries(locationCounts)
+        .map(([name, count]) => ({ name, count }))
+        .sort((a, b) => b.count - a.count)
+
+      const labels = sortedLocations.map((l) => l.name)
+      const data = sortedLocations.map((l) => l.count)
 
       const shadesColor1 = [
         "rgba(35, 39, 87, 0.9)",
@@ -1327,44 +1382,46 @@ export default {
       })
 
       return {
-        labels: labels,
+        labels,
         datasets: [
           {
             label: "Number of Assets",
-            data: data,
+            data,
             backgroundColor: backgroundColors,
             borderColor: backgroundColors.map((color) => color.replace(/[\d.]+\)$/, "1)")),
             borderWidth: 0,
-            barPercentage: 0.6,
-            borderRadius: 4,
-            maxBarThickness: 30,
-            hoverBackgroundColor: backgroundColors // keep same on hover
+            borderRadius: {
+              topLeft: 0,
+              topRight: 4,
+              bottomLeft: 0,
+              bottomRight: 4
+            },
+            borderSkipped: false
           }
         ]
       }
     },
-
     locationAssetsChartOptions() {
+      const dataValues = this.locationAssetsChartData.datasets[0].data
+      const maxValue = Math.max(...dataValues, 0)
+      const integerTicks = Array.from({ length: maxValue + 1 }, (_, i) => i)
+
       return {
         responsive: true,
-        maintainAspectRatio: false,
-        indexAxis: "y", // Horizontal Bar Chart
+        maintainAspectRatio: false, // ✅ must be false so chart fills the dynamic height div
+        indexAxis: "y",
+
         plugins: {
-          legend: {
-            display: false
-          },
+          legend: { display: false },
           tooltip: {
             callbacks: {
               label: (context) => {
-                const label = context.label || ""
                 const value = context.raw || 0
                 const total = context.dataset.data.reduce((a, b) => a + b, 0)
                 const perc = total ? ((value / total) * 100).toFixed(1) : 0
-                return `${label}: ${value} (${perc}%)`
+                return `${context.label}: ${value} (${perc}%)`
               },
-              title: (tooltipItems) => {
-                return `Asset Location: ${tooltipItems[0].label}`
-              }
+              title: (tooltipItems) => `Asset Location: ${tooltipItems[0].label}`
             },
             backgroundColor: "rgba(0, 0, 0, 0.8)",
             titleColor: "#fff",
@@ -1372,58 +1429,52 @@ export default {
             borderColor: "#232757",
             borderWidth: 1
           },
-          datalabels: {
-            display: false
-          }
+          datalabels: { display: false }
         },
+
         scales: {
           x: {
             beginAtZero: true,
-            title: {
-              display: false,
-              text: "Number of Incidents",
-              font: { size: 14, weight: "bold" },
-              color: "#232757",
-              padding: { top: 10 }
-            },
             ticks: {
               stepSize: 1,
               font: { size: 12 },
-              color: "#333"
+              color: "#333",
+              callback: function (value) {
+                return integerTicks.includes(value) ? value : null
+              }
             },
-            grid: { display: true, color: "rgba(0, 0, 0, 0.1)", drawBorder: true }
+            grid: { color: "#e0e0e0" }
           },
           y: {
-            title: {
-              display: false,
-              text: "Third Parties",
-              font: { size: 14, weight: "bold" },
-              color: "#232757",
-              padding: { bottom: 10 }
-            },
             ticks: {
               autoSkip: false,
               font: { size: 12 },
-              color: "#333",
-              maxTicksLimit: 10
+              color: "#333"
             },
-            grid: {
-              display: false,
-              color: "rgba(0, 0, 0, 0.1)",
-              drawBorder: true
-            }
+            grid: { display: false }
           }
         },
-        animation: {
-          duration: 1000,
-          easing: "easeOutQuart"
+
+        elements: {
+          bar: {
+            borderRadius: {
+              topLeft: 0,
+              topRight: 4,
+              bottomLeft: 0,
+              bottomRight: 4
+            },
+            borderSkipped: false
+          }
         },
-        layout: {
-          padding: { left: 5, right: 5, top: 10, bottom: 10 }
-        }
+
+        // onHover: function (event, activeElements) {
+        //   event.native.target.style.cursor = activeElements.length ? "pointer" : "default"
+        // },
+
+        animation: { duration: 1000, easing: "easeOutQuart" },
+        layout: { padding: { left: 5, right: 10, top: 5, bottom: 5 } }
       }
     }
-
     // // Sensitive Assets
     // sensitiveAssetsChartData() {
     //   return {
@@ -1544,11 +1595,23 @@ export default {
   },
   async mounted() {
     try {
-      await Promise.all([this.fetchAssets(), this.fetchPolicies(), this.fetchSensitiveAssets()])
+      console.log(" Dashboard mounting - Starting data fetch...")
+
+      // Add 15 second timeout to prevent infinite loading
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("Dashboard data fetch timeout")), 15000)
+      )
+
+      await Promise.race([
+        Promise.all([this.fetchAssets(), this.fetchPolicies(), this.fetchSensitiveAssets()]),
+        timeoutPromise
+      ])
+      console.log("Dashboard data loaded successfully")
     } catch (error) {
-      console.error("Dashboard loading error:", error)
+      console.error(" Dashboard loading error:", error)
     } finally {
       this.loading = false
+      console.log("Loading complete, showing dashboard")
     }
   }
 }

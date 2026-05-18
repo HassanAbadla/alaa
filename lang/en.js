@@ -169,7 +169,8 @@ export default {
 
     compliance_overview: {
       title: "3. Compliance Framework Overview",
-      paragraph: "This section provides a high-level summary of the chosen framework, outlining its key domains, controls, and how the organization's current practices align with its requirements.",
+      paragraph:
+        "This section provides a high-level summary of the chosen framework, outlining its key domains, controls, and how the organization's current practices align with its requirements.",
       completion_title: "{frameworkName} Overall Completion",
       compliance_status_title: "{frameworkName} Overall Compliance Status" // ← NEW
     },
@@ -285,7 +286,7 @@ export default {
             executive_action:
               "Executive Action Required: Focus on sustaining this peak performance and fostering a culture of continuous advocacy and external benchmarking.",
             items: [
-              "Recommendation 1: Establish a formal \"Internal Center of Excellence\" to mentor other departments and ensure this high level of maturity is sustained during organizational growth.",
+              'Recommendation 1: Establish a formal "Internal Center of Excellence" to mentor other departments and ensure this high level of maturity is sustained during organizational growth.',
               "Recommendation 2: Embed GRC performance metrics into the core business strategy to ensure all future growth is natively risk-aligned.",
               "Recommendation 3: Engage in industry-wide working groups to share these best practices, positioning the organization as a thought leader in the GRC space."
             ]
@@ -2410,7 +2411,7 @@ export default {
     total_risks_by_impact: "Total Risks by Impact",
     open_closed_risks: "Open/Closed Risks",
     risk_treatment_effect: "Risk Treatment Effect",
-    risk_treatment_deadline: "Upcomming Risk Treatment Deadlines (Next 5 Days)",
+    risk_treatment_deadline: "Upcoming Risk Treatment Deadlines (Next 5 Days)",
     top_5_risks_identified_and_exposure: "Top 5 Risks Identified and Exposure",
     risk_severity: "Risk Severity",
     total_residual_risks: "Total Residual Risks",
@@ -2473,7 +2474,8 @@ export default {
     click_to_drill_down: "Click to drill down",
     number_of_open_and_closed_contracts: "Number of Open and Closed Contracts",
     risks_by_status: "Risks by Status",
-    compliance_insights_dashboard: "Compliance Insights Dashboard"
+    compliance_insights_dashboard: "Compliance Insights Dashboard",
+    incident_distribution_by_type: "Incident Distribution by Type"
   },
   field_info: {
     risk_description:

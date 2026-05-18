@@ -39,44 +39,66 @@
     <v-row dense class="mt-2">
 
   <!-- Top Threats and Exposure -->
-  <v-col cols="12" sm="6" md="3" lg="3">
-   <v-card class="pa-4" outlined style="border-radius: 12px; min-height: 355px; max-height: 355px; height: 355px; display: flex; flex-direction: column; position: relative; overflow: hidden;">
-    <div class="text-h6 text-center mb-4"style="color: #232757">{{ $t("page.top_threats_and_exposure") }}</div>
-      <v-simple-table dense style="background-color: white; table-layout: fixed; width: 100%; flex: 1; overflow-y: auto; max-height: 280px;">
-        <colgroup>
-          <col style="width: 33.33%" />
-          <col style="width: 33.33%" />
-          <col style="width: 33.33%" />
-        </colgroup>
+ <v-col cols="12" sm="6" md="3" lg="3">
+  <v-card class="pa-4" outlined style="border-radius: 12px; min-height: 355px; max-height: 355px; height: 355px; display: flex; flex-direction: column; position: relative; overflow: hidden;">
+    <div class="text-h6 text-center mb-3" style="color: #232757">{{ $t("page.top_threats_and_exposure") }}</div>
+
+    <div style="flex: 1; overflow-y: auto; border-radius: 8px; overflow: hidden;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 16px;">
         <thead>
-          <tr style="background-color: #232757">
-            <th class="text-center" style="color: white; font-weight: bold; padding: 8px 12px; border-bottom: 1px solid #e0e0e0; border-right: 2px solid white; font-size: 16px;">
+          <tr style="background-color: #232757;">
+            <th style="text-align: left; padding: 8px 10px; font-size: 16px; font-weight: 500; color: white;">
               {{ $t("table.threat") }}
             </th>
-            <th class="text-center" style="color: white; font-weight: bold; padding: 8px 12px; border-bottom: 1px solid #e0e0e0; border-right: 2px solid white; font-size: 16px;">
+            <th style="text-align: center; padding: 8px 10px; font-size: 16px; font-weight: 500; color: white;">
               {{ $t("page.number_of_risks") }}
             </th>
-            <th class="text-center" style="color: white; font-weight: bold; padding: 8px 12px; border-bottom: 1px solid #e0e0e0; font-size: 16px;">
-              {{ $t("page.exposure") + " (SAR)" }}
+            <th style="text-align: right; padding: 8px 10px; font-size: 16px; font-weight: 500; color: white;">
+              {{ $t("page.exposure") }} (SAR)
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in riskTableData1" :key="index" style="border-bottom: 1px solid #e0e0e0">
-            <td style="padding: 8px 12px; color: #232757; border-right: 1px solid #e0e0e0; word-wrap: break-word; text-align: center; font-size: 15px;">
-              {{ item.threat_name }}
+          <tr
+            v-for="(item, index) in riskTableData1"
+            :key="index"
+            :style="{
+              borderBottom: '1px solid #f0f0f0',
+              transition: 'background 0.15s',
+              background: index % 2 !== 0 ? '#f5f7fb' : 'white'
+            }"
+            @mouseover="$event.currentTarget.style.background='#e8ecf5'"
+            @mouseleave="$event.currentTarget.style.background = index % 2 !== 0 ? '#f5f7fb' : 'white'"
+          >
+            <td style="padding: 8px 10px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span :style="{
+                  width: '9px',
+                  height: '9px',
+                  borderRadius: '50%',
+                  flexShrink: 0,
+                  display: 'inline-block',
+                  background: index === 0 ? '#e24b4a' : index === 1 ? '#e24b4a' : index === 2 ? '#eaa035' : index === 3 ? '#eaa035' : '#7ab541'
+                }"></span>
+                <span style="font-weight: 500; color: #232757; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90px;">
+                  {{ item.threat_name }}
+                </span>
+              </div>
             </td>
-            <td style="padding: 8px 12px; color: #232757; border-right: 1px solid #e0e0e0; word-wrap: break-word; text-align: center; font-size: 15px;">
-              {{ item.risks_count }}
+            <td style="padding: 8px 10px; text-align: center;">
+              <span style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: #f0f2f8; color: #232757; font-size: 14px; font-weight: 500;">
+                {{ item.risks_count }}
+              </span>
             </td>
-            <td style="padding: 8px 12px; color: #232757; word-wrap: break-word; text-align: center; font-size: 15px;">
+            <td style="padding: 8px 10px; text-align: right; color: #54689d; font-weight: 500; font-size: 14px;">
               {{ formatCurrency(item.budget) }}
             </td>
           </tr>
         </tbody>
-      </v-simple-table>
-    </v-card>
-  </v-col>
+      </table>
+    </div>
+  </v-card>
+</v-col>
 
   <!-- Total Risks by Likelihood -->
   <v-col cols="12" sm="6" md="3" lg="3">
@@ -213,12 +235,18 @@
   <v-col cols="12" md="6">
   <v-card class="pa-4" outlined style="border-radius: 12px; height: 355px; position: relative; overflow: hidden;">
       <div class="text-h6 text-center mb-3" style="color: #232757">{{ $t("page.risk_treatment_effect") }}</div>
+      
         <v-row justify="center" class="mt-1 mb-3">
+     <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+
+    <div style="font-size:11px; font-weight:700; color:#d4a017; display:flex; align-items:center; gap:4px;">
+      ▼ Click these to show / hide
+    </div>
+
   <div class="grc-legend">
-    
     <div 
       class="legend-item"
-      @click="showInherent = !showInherent"
+      @click="toggleInherent"
       :style="{ opacity: showInherent ? 1 : 0.4, cursor: 'pointer' }"
     >
       <span class="dot inherent"></span> Inherent
@@ -226,12 +254,12 @@
 
     <div 
       class="legend-item"
-      @click="showResidual = !showResidual"
+      @click="toggleResidual"
       :style="{ opacity: showResidual ? 1 : 0.4, cursor: 'pointer' }"
     >
       <span class="dot residual"></span> Residual
     </div>
-
+  </div>
   </div>
 </v-row>
       <div  style="height: calc(100% - 90px); width: 100%; position: relative">
@@ -243,6 +271,7 @@
           :chart-width="'100%'"
         />
       </div>
+  
     </v-card>
   </v-col>
 
@@ -357,104 +386,80 @@
       <v-col cols="12" md="6">
        <v-card class="pa-4" outlined style="border-radius: 12px; height: 355px; position: relative; overflow: hidden;">
           <div class="text-h6 text-center mb-4"style="color: #232757">{{ $t("page.risk_treatment_deadline") }}</div>
+        
+
           <chart
             :type="'scatter'"
             :chart-data="riskTreatmentDeadlineChartData"
             :chart-options="riskTreatmentDeadlineChartOptions"
+              :chart-plugins="[todayLinePlugin]"
             :chart-height="275"
             :chart-width="'100%'"
-          />
+          /> 
         </v-card>
       </v-col>
 
-      <!-- Top 5 Risks Identified and Exposure -->
-      <v-col cols="12" sm="6" md="6" lg="3">
-        <v-card class="pa-4" outlined style="border-radius: 12px; min-height: 355px; max-height: 355px; height: 355px; display: flex; flex-direction: column; position: relative; overflow: hidden;">
-          <div class="text-h6 text-center mb-4"style="color: #232757">{{ $t("page.top_5_risks_identified_and_exposure") }}</div>
-          <v-simple-table dense style="background-color: white; table-layout: fixed; width: 100%; flex: 1; overflow-y: auto; max-height: 280px;">
-            <colgroup>
-              <col style="width: 33.33%" />
-              <col style="width: 33.33%" />
-              <col style="width: 33.33%" />
-            </colgroup>
-            <thead>
-              <tr style="background-color: #232757">
-                <th
-                  class="text-center"
-                  style="
-                    color: white;
-                    font-weight: bold;
-                    padding: 8px 12px;
-                    border-bottom: 1px solid #e0e0e0;
-                    border-right: 2px solid white;
-                    font-size: 16px;
-                  "
-                >
-                  {{ $t("table.name") }}
-                </th>
-                <th
-                  class="text-center"
-                  style="
-                    color: white;
-                    font-weight: bold;
-                    padding: 8px 12px;
-                    border-bottom: 1px solid #e0e0e0;
-                    border-right: 2px solid white;
-                    font-size: 16px;
-                  "
-                >
-                  {{ $t("page.risk_severity") }}
-                </th>
-                <th
-                  class="text-center"
-                  style="
-                    color: white;
-                    font-weight: bold;
-                    padding: 8px 12px;
-                    border-bottom: 1px solid #e0e0e0;
-                    font-size: 16px;
-                  "
-                >
-                  {{ $t("table.identification_date") }}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(item, index) in riskTableData2" :key="index" style="border-bottom: 1px solid #e0e0e0">
-                <td
-                  style="
-                    padding: 8px 12px;
-                    color: #232757;
-                    border-right: 1px solid #e0e0e0;
-                    word-wrap: break-word;
-                    text-align: center;
-                    font-size: 15px;
-                  "
-                >
-                  {{ item.riskName }}
-                </td>
-                <td
-                  style="
-                    padding: 8px 12px;
-                    color: #232757;
-                    border-right: 1px solid #e0e0e0;
-                    word-wrap: break-word;
-                    text-align: center;
-                    font-size: 15px;
-                  "
-                >
-                  {{ item.severity }}
-                </td>
-                <td
-                  style="padding: 8px 12px; color: #232757; word-wrap: break-word; text-align: center; font-size: 15px"
-                >
-                  {{ formatDate(item.identifiedDate) }}
-                </td>
-              </tr>
-            </tbody>
-          </v-simple-table>
-        </v-card>
-      </v-col>
+     <!-- Top 5 Risks Identified and Exposure -->
+<v-col cols="12" sm="6" md="6" lg="3">
+  <v-card class="pa-4" outlined style="border-radius: 12px; min-height: 355px; max-height: 355px; height: 355px; display: flex; flex-direction: column; position: relative; overflow: hidden;">
+    <div class="text-h6 text-center mb-3" style="color: #232757">{{ $t("page.top_5_risks_identified_and_exposure") }}</div>
+
+    <div style="flex: 1; overflow-y: auto; border-radius: 8px; overflow: hidden;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+        <thead>
+          <tr style="background-color: #232757;">
+            <th style="text-align: left; padding: 8px 10px; font-size: 16px; font-weight: 500; color: white;">
+              {{ $t("table.name") }}
+            </th>
+            <th style="text-align: center; padding: 8px 10px; font-size: 16px; font-weight: 500; color: white;">
+              {{ $t("page.risk_severity") }}
+            </th>
+            <th style="text-align: right; padding: 8px 10px; font-size: 16px; font-weight: 500; color: white;">
+              {{ $t("table.identification_date") }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="(item, index) in riskTableData2"
+            :key="index"
+            :style="{
+              borderBottom: '1px solid #f0f0f0',
+              transition: 'background 0.15s',
+              background: index % 2 !== 0 ? '#f5f7fb' : 'white'
+            }"
+            @mouseover="$event.currentTarget.style.background='#e8ecf5'"
+            @mouseleave="$event.currentTarget.style.background = index % 2 !== 0 ? '#f5f7fb' : 'white'"
+          >
+            <td style="padding: 8px 10px; font-weight: 500; color: #232757; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90px;">
+              {{ item.riskName }}
+            </td>
+            <td style="padding: 8px 10px; text-align: center;">
+              <span :style="{
+                display: 'inline-block',
+                padding: '2px 8px',
+                borderRadius: '20px',
+                fontSize: '14px',
+                fontWeight: '500',
+                background: String(item.severity).toLowerCase() === 'high' ? '#fde8e8' :
+                            String(item.severity).toLowerCase() === 'moderate' ? '#faeeda' :
+                            String(item.severity).toLowerCase() === 'low' ? '#eaf3de' : '#e0e0e0',
+                color: String(item.severity).toLowerCase() === 'high' ? '#a32d2d' :
+                       String(item.severity).toLowerCase() === 'moderate' ? '#633806' :
+                       String(item.severity).toLowerCase() === 'low' ? '#27500a' : '#666666'
+              }">
+                {{ item.severity }}
+              </span>
+            </td>
+            <td style="padding: 8px 10px; text-align: right; color: #888; font-size: 14px;">
+              {{ formatDate(item.identifiedDate) }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </v-card>
+</v-col>
     </v-row>
 
    <v-row dense class="mt-2" style="align-items: stretch;">
@@ -563,16 +568,73 @@ export default {
   name: "RiskDashboard",
   components: { Chart, RiskHeatmap },
   layout: "dashboard-layout",
-  data() {
-    return {
-      loading: true,
-      loadingHeatmap: false,
-      heatmapDataLoaded: false,
-      logo: require("@/assets/img/logo-sw1.svg"),
-      showInherent: true,
-    showResidual: true
+ data() {
+  return {
+    loading: true,
+    loadingHeatmap: false,
+    heatmapDataLoaded: false,
+    logo: require("@/assets/img/logo-sw1.svg"),
+    showInherent: true,
+    showResidual: true,
+    todayLinePlugin: {
+      id: "todayLine",
+      afterDraw(chart) {
+        const uniqueDates = chart.data.uniqueDates
+        if (!uniqueDates || !uniqueDates.length) return
+
+        const today = new Date().toISOString().split("T")[0]
+        const todayTime = new Date(today).getTime()
+        const firstTime = new Date(uniqueDates[0]).getTime()
+        const lastTime = new Date(uniqueDates[uniqueDates.length - 1]).getTime()
+
+        if (todayTime > lastTime) return
+
+        let xValue = -1
+        for (let i = 0; i < uniqueDates.length - 1; i++) {
+          const t0 = new Date(uniqueDates[i]).getTime()
+          const t1 = new Date(uniqueDates[i + 1]).getTime()
+          if (todayTime >= t0 && todayTime <= t1) {
+            xValue = i + (todayTime - t0) / (t1 - t0)
+            break
+          }
+        }
+
+        const xScale = chart.scales.x
+        const yScale = chart.scales.y
+        const ctx = chart.ctx
+
+        const xPos = xScale.getPixelForValue(xValue)
+
+        ctx.save()
+        ctx.beginPath()
+        ctx.moveTo(xPos, yScale.top)
+        ctx.lineTo(xPos, yScale.bottom)
+        ctx.strokeStyle = "#e74c3c"
+        ctx.lineWidth = 2
+        ctx.setLineDash([6, 3])
+        ctx.stroke()
+
+        ctx.setLineDash([])
+        ctx.fillStyle = "#e74c3c"
+        ctx.font = "bold 11px Arial"
+        ctx.textAlign = "center"
+        ctx.fillText("Today", xPos, yScale.top - 6)
+
+     
+const todayStr = new Date().toLocaleDateString("en-US", { month: "short", day: "2-digit" })
+const alreadyOnAxis = uniqueDates.includes(today)
+
+if (!alreadyOnAxis) {
+  ctx.fillStyle = "#666666"
+  ctx.font = "11px Arial"
+  ctx.textAlign = "center"
+  ctx.fillText(todayStr, xPos, yScale.bottom + 16)
+  }
+        ctx.restore()
+      }
     }
-  },
+  }
+},
   computed: {
     ...mapState("risk", [
       "risks",
@@ -1080,7 +1142,7 @@ export default {
         maintainAspectRatio: false,
         scales: {
           y: {
-            stacked: true,
+            stacked: false,
             display: true,
             beginAtZero: true,
             ticks: {
@@ -1096,7 +1158,7 @@ export default {
             }
           },
           x: {
-            stacked: true,
+            stacked: false,
             display: true,
             ticks: {
              // color: "#232757",
@@ -1149,8 +1211,8 @@ export default {
         },
         datasets: {
           bar: {
-            barPercentage: 0.6,
-            categoryPercentage: 0.8
+            barPercentage: 0.9,
+            categoryPercentage: 0.5
           }
         },
         // DRILL DOWN
@@ -1679,9 +1741,10 @@ export default {
         },
         elements: {
           arc: { borderWidth: 0, borderColor: "#ffffff", borderAlign: "center" }
-        }
+        },
+        clip: false
       }
-      clip: false
+    
     },
 
     // --- Risk by Threats --- Table1
@@ -1937,9 +2000,12 @@ export default {
         .map((risk, idx) => {
           const dates = Array.isArray(risk.end_date) ? risk.end_date : [risk.end_date]
 
-          const filteredDates = dates
-            .map((d) => new Date(d))
-            .filter((date) => !isNaN(date) && date >= minDate && date <= maxDate)
+         const filteredDates = [...new Set(
+  dates
+    .map((d) => new Date(d))
+    .filter((date) => !isNaN(date) && date >= minDate && date <= maxDate)
+    .map((date) => date.toISOString().split("T")[0])
+)].map((dateStr) => new Date(dateStr))
 
           if (filteredDates.length === 0) return null
 
@@ -1960,8 +2026,10 @@ export default {
             pointRadius: 8,
             pointHoverRadius: 12,
             pointBorderWidth: 2,
-            showLine: false
-          }
+            pointStyle: "circle",
+            showLine: true,
+            borderWidth: 1.5,      // thin line
+  borderDash: [4, 4]}
         })
         .filter(Boolean)
 
@@ -2035,25 +2103,26 @@ export default {
 
             displayColors: false,
 
-            callbacks: {
-              title: (tooltipItems) => {
-                if (tooltipItems.length && tooltipItems[0].raw) {
-                  return `Upcomming Risk Treatment: ${tooltipItems[0].raw.riskName || ""}`
-                }
-                return ""
-              },
-              label: (context) => {
-                if (context.raw && context.raw.originalDate) {
-                  const date = new Date(context.raw.originalDate)
-                  return `Due: ${date.toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "2-digit",
-                    year: "numeric"
-                  })}`
-                }
-                return "Date not available"
-              }
-            }
+   callbacks: {
+  title: (tooltipItems) => {
+    if (tooltipItems.length && tooltipItems[0].raw) {
+      return `Upcoming Risk Treatment: ${tooltipItems[0].raw.riskName || ""}`
+    }
+    return ""
+  },
+  label: (context) => {
+    if (context.raw && context.raw.originalDate) {
+      const date = new Date(context.raw.originalDate)
+      return `Due: ${date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "2-digit",
+        year: "numeric"
+      })}`
+    }
+    return "Date not available"
+  },
+  afterLabel: () => null   // ← ADD THIS LINE ONLY
+}
           },
 
           datalabels: { display: false }
@@ -2063,7 +2132,7 @@ export default {
           x: {
             type: "linear",
             position: "bottom",
-            min: -0.5,
+            min: -1.5,
             max: Math.max(uniqueDates.length - 0.5, 0),
             ticks: {
              // color: "#232757",
@@ -2142,7 +2211,7 @@ export default {
           hoverBorderWidth: 2,
           borderWidth: 1,
           hoverBackgroundColor: "#ffffff",
-          pointStyle: "circle"
+           pointStyle: true 
         },
 
         layout: {
@@ -2355,7 +2424,25 @@ export default {
     //       treatment_id: id
     //     }
     //   })
-    // }
+    // },
+    toggleInherent() {
+      if (this.showInherent && !this.showResidual) {
+        this.showInherent = true
+        this.showResidual = true
+      } else {
+        this.showInherent = true
+        this.showResidual = false
+      }
+    },
+    toggleResidual() {
+      if (!this.showInherent && this.showResidual) {
+        this.showInherent = true
+        this.showResidual = true
+      } else {
+        this.showInherent = false
+        this.showResidual = true
+      }
+    }
   }
 }
 </script>

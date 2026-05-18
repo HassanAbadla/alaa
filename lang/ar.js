@@ -143,7 +143,8 @@ export default {
 
     compliance_overview: {
       title: "٣. نظرة عامة على إطار الامتثال",
-      paragraph: "يُقدِّم هذا القسم ملخصاً رفيع المستوى للإطار المختار، يستعرض مجالاته الرئيسية والضوابط المرتبطة به، ومدى توافق الممارسات الحالية للمنظمة مع متطلباته.",
+      paragraph:
+        "يُقدِّم هذا القسم ملخصاً رفيع المستوى للإطار المختار، يستعرض مجالاته الرئيسية والضوابط المرتبطة به، ومدى توافق الممارسات الحالية للمنظمة مع متطلباته.",
       completion_title: "نسبة الإنجاز الإجمالية لـ {frameworkName}",
       compliance_status_title: "حالة الامتثال الإجمالية لـ {frameworkName}"
     },
@@ -2372,7 +2373,8 @@ export default {
     asset_types: "أنواع الأصول",
     asset_categories: "فئات الأصول",
     third_party_industries: "صناعات الأطراف الثالثة",
-    third_party_criticality: "أهمية الطرف الثالث"
+    third_party_criticality: "أهمية الطرف الثالث",
+    incident_distribution_by_type: "توزيع الحوادث حسب النوع"
   },
   field_info: {
     risk_description:

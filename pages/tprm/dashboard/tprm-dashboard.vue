@@ -112,9 +112,9 @@
 
         <!-- Chart 2 -->
         <v-col cols="12" md="4">
-          <v-card class="pa-6" outlined style="border-radius: 12px; height: 330px; position: relative">
+          <v-card class="pa-4" outlined style="border-radius: 12px; height: 330px; position: relative">
             <!-- Title -->
-            <div class="text-h6 text-center mb-4" style="color: #232757">
+            <div class="text-h6 text-center mb-2" style="color: #232757">
               {{ $t("page.third_parties_by_industry") }}
             </div>
 
@@ -185,6 +185,34 @@
             <div class="text-h6 text-center mb-2" style="color: #232757">
               {{ $t("page.incident_trend_over_time") }}
             </div>
+            <!-- ✅ ADD ONLY THIS BLOCK -->
+            <!-- <div class="d-flex justify-center align-center mb-2" style="gap: 20px">
+              <div class="text-center">
+                <div style="font-size: 18px; font-weight: 700; color: #e74c3c">
+                  {{ getIncidents.length || 0 }}
+                </div>
+                <div style="font-size: 11px; color: #888">{{ $t("page.total_incidents") }}</div>
+              </div>
+
+              <div style="width: 1px; height: 28px; background: #e0e0e0"></div>
+
+              <div class="text-center">
+                <div style="font-size: 18px; font-weight: 700; color: #232757">
+                  {{ incidentTrendChartData.datasets[0].data.filter((v) => v > 0).length }}
+                </div>
+                <div style="font-size: 11px; color: #888">{{ $t("page.active_months") }}</div>
+              </div>
+
+              <div style="width: 1px; height: 28px; background: #e0e0e0"></div>
+
+              <div class="text-center">
+                <div style="font-size: 18px; font-weight: 700; color: #232757">
+                  {{ Math.max(...(incidentTrendChartData.datasets[0].data || [0])) }}
+                </div>
+                <div style="font-size: 11px; color: #888">{{ $t("page.peak_month") }}</div>
+              </div>
+            </div> -->
+            <!-- ✅ END OF NEW BLOCK -->
             <Chart
               :type="'line'"
               :chart-data="incidentTrendChartData"
@@ -198,32 +226,27 @@
 
       <v-row dense class="my-1">
         <!-- Chart 4 -->
+        <!-- Chart 1 — Mean Time to Resolve -->
         <v-col cols="12" md="4">
           <v-card
             class="pa-4 d-flex flex-column align-center justify-center"
             outlined
             style="border-radius: 12px; height: 330px"
           >
-            <div class="text-h6 text-center mb-2" style="color: #232757">{{ $t("page.third_parties_by_status") }}</div>
+            <div class="text-h6 text-center mb-2" style="color: #232757">
+              {{ $t("page.mean_time_to_resolve_per_third_party") }}
+            </div>
             <Chart
               :type="'bar'"
-              :chart-data="statusChartData"
-              :chart-options="statusChartOptions"
+              :chart-data="meanTimeChartData"
+              :chart-options="meanTimeChartOptions"
+              :chart-plugins="meanTimePlugins"
               :chart-height="250"
-              :chart-width="'90%'"
+              :chart-width="'100%'"
             />
-            <!-- Annotation on the left inside the card -->
-            <div
-              class="d-flex align-center"
-              style="font-size: 12px; color: #666; position: absolute; bottom: 12px; left: 16px"
-            >
-              <span style="color: #d4a017; margin-right: 4px">▼</span>
-              <span class="font-weight-bold" style="color: #232757">
-                {{ $t("page.click_to_drill_down") }}
-              </span>
-            </div>
           </v-card>
         </v-col>
+
         <v-col cols="12" md="4">
           <!--  <v-card
             class="pa-4 d-flex flex-column align-center justify-center"
@@ -251,9 +274,11 @@
               </span>
             </div>
           </v-card>-->
-          <v-card class="pa-6" outlined style="border-radius: 12px; height: 330px; position: relative">
+          <v-card class="pa-4" outlined style="border-radius: 12px; height: 330px; position: relative">
             <!-- Title -->
-            <div class="text-h6 text-center mb-4" style="color: #232757">Incident Distribution by Type</div>
+            <div class="text-h6 text-center mb-2" style="color: #232757">
+              {{ $t("page.incident_distribution_by_type") }}
+            </div>
 
             <!-- Centered Wrapper -->
             <div class="d-flex align-center justify-center" style="height: calc(100% - 70px)">
@@ -317,16 +342,24 @@
             outlined
             style="border-radius: 12px; height: 330px"
           >
-            <div class="text-h6 text-center mb-2" style="color: #232757">
-              {{ $t("page.third_parties_by_potential_risk") }}
-            </div>
+            <div class="text-h6 text-center mb-2" style="color: #232757">{{ $t("page.third_parties_by_status") }}</div>
             <Chart
               :type="'bar'"
-              :chart-data="potentialChartData"
-              :chart-options="potentialChartOptions"
+              :chart-data="statusChartData"
+              :chart-options="statusChartOptions"
               :chart-height="250"
               :chart-width="'90%'"
             />
+            <!-- Annotation on the left inside the card -->
+            <div
+              class="d-flex align-center"
+              style="font-size: 12px; color: #666; position: absolute; bottom: 12px; left: 16px"
+            >
+              <span style="color: #d4a017; margin-right: 4px">▼</span>
+              <span class="font-weight-bold" style="color: #232757">
+                {{ $t("page.click_to_drill_down") }}
+              </span>
+            </div>
           </v-card>
         </v-col>
       </v-row>
@@ -334,9 +367,9 @@
       <v-row dense class="my-1">
         <!-- Chart 7 -->
         <v-col cols="12" md="4">
-          <v-card class="pa-6" outlined style="border-radius: 12px; height: 330px; position: relative">
+          <v-card class="pa-4" outlined style="border-radius: 12px; height: 330px; position: relative">
             <!-- Title -->
-            <div class="text-h6 text-center mb-4" style="color: #232757">
+            <div class="text-h6 text-center mb-2" style="color: #232757">
               {{ $t("page.all_risks_by_outsorce_type") }}
             </div>
 
@@ -427,9 +460,9 @@
 
         <!-- Chart 9 -->
         <v-col cols="12" md="4">
-          <v-card class="pa-6" outlined style="border-radius: 12px; height: 330px; position: relative">
+          <v-card class="pa-4" outlined style="border-radius: 12px; height: 330px; position: relative">
             <!-- Title -->
-            <div class="text-h6 text-center mb-4" style="color: #232757">
+            <div class="text-h6 text-center mb-2" style="color: #232757">
               {{ $t("page.third_parties_by_risk_level") }}
             </div>
 
@@ -490,9 +523,9 @@
       <v-row dense class="my-1">
         <!-- Chart 3 -->
         <v-col cols="12" md="4">
-          <v-card class="pa-6" outlined style="border-radius: 12px; height: 330px; position: relative">
+          <v-card class="pa-4" outlined style="border-radius: 12px; height: 330px; position: relative">
             <!-- Title -->
-            <div class="text-h6 text-center mb-4" style="color: #232757">
+            <div class="text-h6 text-center mb-2" style="color: #232757">
               {{ $t("page.third_parties_by_rating") }}
             </div>
 
@@ -536,8 +569,6 @@
             </div>
           </v-card>
         </v-col>
-
-        <!-- Chart 1 -->
         <v-col cols="12" md="4">
           <v-card
             class="pa-4 d-flex flex-column align-center justify-center"
@@ -545,12 +576,12 @@
             style="border-radius: 12px; height: 330px"
           >
             <div class="text-h6 text-center mb-2" style="color: #232757">
-              {{ $t("page.mean_time_to_resolve_per_third_party") }}
+              {{ $t("page.third_parties_by_potential_risk") }}
             </div>
             <Chart
               :type="'bar'"
-              :chart-data="meanTimeChartData"
-              :chart-options="meanTimeChartOptions"
+              :chart-data="potentialChartData"
+              :chart-options="potentialChartOptions"
               :chart-height="250"
               :chart-width="'90%'"
             />
@@ -559,9 +590,9 @@
 
         <!-- Chart 12 -->
         <v-col cols="12" md="4">
-          <v-card class="pa-6" outlined style="border-radius: 12px; height: 330px; position: relative">
+          <v-card class="pa-4" outlined style="border-radius: 12px; height: 330px; position: relative">
             <!-- Title -->
-            <div class="text-h6 text-center mb-4" style="color: #232757">
+            <div class="text-h6 text-center mb-2" style="color: #232757">
               {{ $t("page.third_parties_by_criticality") }}
             </div>
 
@@ -645,22 +676,24 @@ export default {
 
   async mounted() {
     try {
-      await Promise.all([
-        this.fetchThirdParties(),
-        this.loadData(),
+      // load only critical data first — page shows immediately
+      await Promise.all([this.fetchThirdParties(), this.fetchIncidents(), this.loadData()])
+
+      this.loading = false // show page NOW
+
+      //  load rest silently in background
+      Promise.all([
         this.fetchIndustries(),
         this.fetchRatings(),
         this.fetchIncidentTypes(),
         this.fetchPotentialRisks(),
         this.fetchOutsourceTypes(),
-        this.fetchIncidents(),
         this.fetchOutsourceContracts(),
         this.fetchAggregateRiskLevels(),
         this.fetchDashboardData()
-      ])
+      ]).catch((e) => console.error("Background load failed:", e))
     } catch (e) {
       console.error("TPRM dashboard load failed:", e)
-    } finally {
       this.loading = false
     }
   },
@@ -681,7 +714,7 @@ export default {
     ...mapGetters("tprmAggregateRiskLevel", ["getAggregateRiskLevels"]),
     ...mapState("tprmThirdParties", ["dashboardData"]),
 
-    // Cards Dat
+    // Cards Data
     statCards() {
       return [
         {
@@ -1186,6 +1219,7 @@ export default {
       return {
         responsive: true,
         maintainAspectRatio: false,
+        // indexAxis: "y",
         onClick: (evt, elements, chart) => {
           if (!elements.length) return
 
@@ -1244,10 +1278,18 @@ export default {
                 size: 12
               },
               color: "#333",
-              maxTicksLimit: 10
+              maxRotation: 0, // force flat — no rotation
+              minRotation: 0,
+              //maxTicksLimit: 10,
+              callback: function (value, index, ticks) {
+                const label = this.getLabelForValue(value)
+                // shorten long labels
+                return label.length > 10 ? label.substring(0, 10) + "…" : label
+              }
             },
             grid: {
-              display: false
+              display: false,
+              color: "rgba(0, 0, 0, 0.1)"
             }
           },
           y: {
@@ -1271,6 +1313,7 @@ export default {
               color: "#333"
             },
             grid: {
+              display: true,
               color: "rgba(0, 0, 0, 0.1)",
               drawBorder: false
             }
@@ -1477,12 +1520,16 @@ export default {
             },
             ticks: {
               autoSkip: false,
-              // maxRotation: 45,
-              // minRotation: 30,
+              maxRotation: 0,
+              minRotation: 0,
+              callback: function (value) {
+                const label = this.getLabelForValue(value)
+                return label.length > 10 ? label.substring(0, 10) + "…" : label
+              },
               font: {
                 size: 12
               },
-              color: "#666",
+              color: "#333",
               maxTicksLimit: 10
             },
             grid: {
@@ -2265,10 +2312,8 @@ export default {
         count: tp.incidents?.length || 0,
         color: tp.criticality?.color || "#232757"
       }))
-
-      // Top 5
+      //top urgent incidents should be sorted by count in descending order, and only the top 5 should be displayed
       const top5 = result.sort((a, b) => b.count - a.count).slice(0, 5)
-
       return {
         labels: top5.map((i) => i.name),
         datasets: [
@@ -2532,17 +2577,17 @@ export default {
               font: {
                 size: 12
                 // weight: "bold"
-              },
-              color: "#232757"
+              }
+              // color: "#232757"
             },
             ticks: {
               font: {
                 size: 12
                 // weight: "bold"
               },
-              color: "#232757",
-              maxRotation: 45,
-              minRotation: 45
+              // color: "#232757",
+              maxRotation: 0,
+              minRotation: 0
             },
             grid: {
               display: false
@@ -2595,182 +2640,186 @@ export default {
       }
     },
     //Chart 13 -- Incident Severity by Third party
-    incidentSeverityChartData() {
-      const dashboardData = this.dashboardData || {}
-      const incidentCounts = dashboardData.incident_counts || []
+    // incidentSeverityChartData() {
+    //   const dashboardData = this.dashboardData || {}
+    //   const incidentCounts = dashboardData.incident_counts || []
 
-      if (!Array.isArray(incidentCounts) || incidentCounts.length === 0) {
-        return {
-          labels: ["No Data"],
-          datasets: [
-            {
-              label: "Incident Count",
-              data: [0],
-              backgroundColor: ["#e0e0e0"],
-              borderColor: "transparent",
-              borderWidth: 0
-            }
-          ]
-        }
-      }
+    //   if (!Array.isArray(incidentCounts) || incidentCounts.length === 0) {
+    //     return {
+    //       labels: ["No Data"],
+    //       datasets: [
+    //         {
+    //           label: "Incident Count",
+    //           data: [0],
+    //           backgroundColor: ["#e0e0e0"],
+    //           borderColor: "transparent",
+    //           borderWidth: 0
+    //         }
+    //       ]
+    //     }
+    //   }
 
-      const sortedData = [...incidentCounts].sort((a, b) => b.incident_count - a.incident_count)
+    //   const sortedData = [...incidentCounts].sort((a, b) => b.incident_count - a.incident_count)
 
-      const labels = sortedData.map((item) => item.name || "Unknown")
-      const data = sortedData.map((item) => item.incident_count || 0)
-      const severityIds = sortedData.map((item) => item.id)
+    //   const labels = sortedData.map((item) => item.name || "Unknown")
+    //   const data = sortedData.map((item) => item.incident_count || 0)
+    //   const severityIds = sortedData.map((item) => item.id)
 
-      const baseColor = "#232757"
-      const backgroundColor = sortedData.map((item, index) => {
-        const intensity = 1.0 - (index / sortedData.length) * 0.4
-        const r = Math.round(parseInt(baseColor.slice(1, 3), 16) * intensity)
-        const g = Math.round(parseInt(baseColor.slice(3, 5), 16) * intensity)
-        const b = Math.round(parseInt(baseColor.slice(5, 7), 16) * intensity)
-        return `rgb(${r}, ${g}, ${b})`
-      })
+    //   const baseColor = "#232757"
+    //   const backgroundColor = sortedData.map((item, index) => {
+    //     const intensity = 1.0 - (index / sortedData.length) * 0.4
+    //     const r = Math.round(parseInt(baseColor.slice(1, 3), 16) * intensity)
+    //     const g = Math.round(parseInt(baseColor.slice(3, 5), 16) * intensity)
+    //     const b = Math.round(parseInt(baseColor.slice(5, 7), 16) * intensity)
+    //     return `rgb(${r}, ${g}, ${b})`
+    //   })
 
-      return {
-        labels,
+    //   return {
+    //     labels,
 
-        datasets: [
-          {
-            label: "Incident Count",
-            data,
-            severityIds,
-            backgroundColor,
-            borderColor: "transparent",
-            borderWidth: 0,
-            // hoverOffset: 5,
-            borderRadius: 4,
-            maxBarThickness: 30
-          }
-        ]
-      }
-    },
+    //     datasets: [
+    //       {
+    //         label: "Incident Count",
+    //         data,
+    //         severityIds,
+    //         backgroundColor,
+    //         borderColor: "transparent",
+    //         borderWidth: 0,
+    //         // hoverOffset: 5,
+    //         borderRadius: 4,
+    //         maxBarThickness: 30
+    //       }
+    //     ]
+    //   }
+    // },
 
-    incidentSeverityChartOptions() {
-      return {
-        responsive: true,
-        maintainAspectRatio: false,
-        onClick: (evt, elements, chart) => {
-          if (!elements.length) return
+    // incidentSeverityChartOptions() {
+    //   return {
+    //     responsive: true,
+    //     maintainAspectRatio: false,
+    //     onClick: (evt, elements, chart) => {
+    //       if (!elements.length) return
 
-          const index = elements[0].index
-          const severityId = chart.data.severityIds[index]
+    //       const index = elements[0].index
+    //       const severityId = chart.data.severityIds[index]
 
-          this.goToIncidentSeverity(severityId)
-        },
-        onHover: (evt, activeElements) => {
-          evt.native.target.style.cursor = activeElements.length ? "pointer" : "default"
-        },
-        plugins: {
-          legend: {
-            display: false
-          },
-          tooltip: {
-            callbacks: {
-              label: (context) => {
-                const label = context.label || ""
-                const value = context.raw || 0
-                const total = context.dataset.data.reduce((a, b) => a + b, 0)
-                const perc = total ? ((value / total) * 100).toFixed(1) : 0
-                return `${label}: ${value} (${perc}%)`
-              },
-              title: (tooltipItems) => {
-                return `Incident Severity: ${tooltipItems[0].label}`
-              }
-            },
-            backgroundColor: "rgba(0, 0, 0, 0.8)",
-            titleColor: "#fff",
-            bodyColor: "#fff",
-            borderColor: "#232757",
-            borderWidth: 1
-          },
-          datalabels: {
-            display: false
-          }
-        },
-        scales: {
-          x: {
-            title: {
-              display: false,
-              text: "Third Parties",
-              font: {
-                size: 14,
-                weight: "bold"
-                // family: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
-              },
-              color: "#232757",
-              padding: { top: 10 }
-            },
-            ticks: {
-              autoSkip: false,
-              // maxRotation: 45,
-              // minRotation: 30,
-              font: {
-                size: 12
-                // family: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
-              },
-              color: "#333",
-              maxTicksLimit: 10
-            },
-            grid: {
-              display: false
-            },
-            categoryPercentage: 0.5,
-            barPercentage: 0.5
-          },
-          y: {
-            beginAtZero: true,
-            title: {
-              display: false,
-              text: "Number of Potential Risks",
-              font: {
-                size: 14,
-                weight: "bold"
-              },
-              color: "#232757",
-              padding: { bottom: 10 }
-            },
-            ticks: {
-              stepSize: 1,
-              font: {
-                size: 12
-              },
-              color: "#333"
-            },
-            grid: {
-              color: "rgba(0, 0, 0, 0.1)",
-              drawBorder: false
-            }
-          }
-        },
-        animation: {
-          duration: 1000,
-          easing: "easeOutQuart"
-        },
-        layout: {
-          padding: {
-            left: 5,
-            right: 5,
-            top: 10,
-            bottom: 10
-          }
-        }
-      }
-    },
+    //       this.goToIncidentSeverity(severityId)
+    //     },
+    //     onHover: (evt, activeElements) => {
+    //       evt.native.target.style.cursor = activeElements.length ? "pointer" : "default"
+    //     },
+    //     plugins: {
+    //       legend: {
+    //         display: false
+    //       },
+    //       tooltip: {
+    //         callbacks: {
+    //           label: (context) => {
+    //             const label = context.label || ""
+    //             const value = context.raw || 0
+    //             const total = context.dataset.data.reduce((a, b) => a + b, 0)
+    //             const perc = total ? ((value / total) * 100).toFixed(1) : 0
+    //             return `${label}: ${value} (${perc}%)`
+    //           },
+    //           title: (tooltipItems) => {
+    //             return `Incident Severity: ${tooltipItems[0].label}`
+    //           }
+    //         },
+    //         backgroundColor: "rgba(0, 0, 0, 0.8)",
+    //         titleColor: "#fff",
+    //         bodyColor: "#fff",
+    //         borderColor: "#232757",
+    //         borderWidth: 1
+    //       },
+    //       datalabels: {
+    //         display: false
+    //       }
+    //     },
+    //     scales: {
+    //       x: {
+    //         title: {
+    //           display: false,
+    //           text: "Third Parties",
+    //           font: {
+    //             size: 14,
+    //             weight: "bold"
+    //             // family: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
+    //           },
+    //           color: "#232757",
+    //           padding: { top: 10 }
+    //         },
+    //         ticks: {
+    //           autoSkip: false,
+    //           font: { size: 11 },
+    //           color: "#333",
+    //           maxRotation: 0, //  force flat — no rotation
+    //           minRotation: 0,
+    //           callback: function (value, index, ticks) {
+    //             const label = this.getLabelForValue(value)
+    //             // shorten long labels
+    //             return label.length > 10 ? label.substring(0, 10) + "…" : label
+    //           }
+    //         },
+    //         grid: {
+    //           display: false
+    //         },
+    //         categoryPercentage: 0.5,
+    //         barPercentage: 0.5
+    //       },
+    //       y: {
+    //         beginAtZero: true,
+    //         title: {
+    //           display: false,
+    //           text: "Number of Potential Risks",
+    //           font: {
+    //             size: 14,
+    //             weight: "bold"
+    //           },
+    //           color: "#232757",
+    //           padding: { bottom: 10 }
+    //         },
+    //         ticks: {
+    //           stepSize: 1,
+    //           font: {
+    //             size: 12
+    //           },
+    //           color: "#333"
+    //         },
+    //         grid: {
+    //           color: "rgba(0, 0, 0, 0.1)",
+    //           drawBorder: false
+    //         }
+    //       }
+    //     },
+    //     animation: {
+    //       duration: 1000,
+    //       easing: "easeOutQuart"
+    //     },
+    //     layout: {
+    //       padding: {
+    //         left: 5,
+    //         right: 5,
+    //         top: 10,
+    //         bottom: 10
+    //       }
+    //     }
+    //   }
+    // },
 
     // Chart 12 -- Mean Time to Resolve per Third Party
     meanTimeChartData() {
       const dashboardData = this.dashboardData || {}
       const dateDifferences = dashboardData.date_differences || []
+      const slaTarget = 30
 
+      // no data — return empty
       if (!Array.isArray(dateDifferences) || dateDifferences.length === 0) {
         return {
           labels: ["No Data"],
           datasets: [
             {
               label: "Days to Resolve",
+              type: "bar",
               data: [0],
               backgroundColor: ["#e0e0e0"],
               borderColor: "transparent",
@@ -2781,7 +2830,6 @@ export default {
       }
 
       const sortedData = [...dateDifferences].sort((a, b) => b.days_difference - a.days_difference)
-
       const labels = sortedData.map((item) => item.company_name || "Unknown")
       const data = sortedData.map((item) => item.days_difference || 0)
 
@@ -2798,39 +2846,48 @@ export default {
         labels,
         datasets: [
           {
+            // bars
             label: "Days to Resolve",
+            type: "bar",
             data,
             backgroundColor,
             borderColor: "transparent",
             borderWidth: 0,
-            hoverOffset: 5,
-            borderRadius: 4,
-            maxBarThickness: 30
+            borderRadius: 4
+            //maxBarThickness: 30
           }
+          // {
+          //   // red dashed line across all bars
+          //   label: "Target",
+          //   type: "line",
+          //   data: labels.map(() => slaTarget),
+          //   borderColor: "#e74c3c",
+          //   borderWidth: 2,
+          //   borderDash: [6, 4],
+          //   pointRadius: 0,
+          //   pointHoverRadius: 0,
+          //   fill: false,
+          //   tension: 0,
+          //   order: 0
+          // }
         ]
       }
     },
-
     meanTimeChartOptions() {
+      const slaTarget = 30
       return {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: {
-            display: false
-          },
+          legend: { display: false },
           tooltip: {
             callbacks: {
               label: (context) => {
-                const label = context.label || ""
+                if (context.dataset.label === "Target") return `Target: ${slaTarget} days`
                 const value = context.raw || 0
-                const total = context.dataset.data.reduce((a, b) => a + b, 0)
-                const perc = total ? ((value / total) * 100).toFixed(1) : 0
-                return `${label}: ${value} (${perc}%)`
+                return `${value} days to resolve`
               },
-              title: (tooltipItems) => {
-                return `Mean Time to Resolve: ${tooltipItems[0].label}`
-              }
+              title: (tooltipItems) => `Mean Time to Resolve: ${tooltipItems[0].label}`
             },
             backgroundColor: "rgba(0, 0, 0, 0.8)",
             titleColor: "#fff",
@@ -2838,76 +2895,104 @@ export default {
             borderColor: "#232757",
             borderWidth: 1
           },
-          datalabels: {
-            display: false
-          }
+          datalabels: { display: false }
         },
         scales: {
           x: {
-            title: {
-              display: false,
-              text: "Third Parties",
-              font: {
-                size: 12
-                //weight: "bold"
-                // family: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
-              },
-              // color: "#232757",
-              padding: { top: 10 }
-            },
             ticks: {
               autoSkip: false,
-              // maxRotation: 45,
-              // minRotation: 30,
-              font: {
-                size: 12
-                // family: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
-              },
-              color: "#666",
-              maxTicksLimit: 10
+              font: { size: 11 },
+              color: "#333",
+              maxRotation: 0,
+              minRotation: 0,
+              callback: function (value) {
+                const label = this.getLabelForValue(value)
+                return label.length > 10 ? label.substring(0, 10) + "…" : label
+              }
             },
-            grid: {
-              display: false
-            }
+            grid: { display: false }
           },
           y: {
             beginAtZero: true,
             title: {
-              display: false,
-              text: "Number of Potential Risks",
-              font: {
-                size: 12
-                // weight: "bold"
-              },
-              //color: "#232757",
-              padding: { bottom: 10 }
+              display: true,
+              text: "Days",
+              font: { size: 12, weight: "bold" },
+              color: "#232757"
             },
-            ticks: {
-              stepSize: 1,
-              font: {
-                size: 12
-              },
-              color: "#666"
-            },
-            grid: {
-              color: "rgba(0, 0, 0, 0.1)",
-              drawBorder: false
-            }
+            ticks: { stepSize: 1, font: { size: 12 }, color: "#666" },
+            grid: { color: "rgba(0, 0, 0, 0.1)", drawBorder: false }
           }
         },
-        animation: {
-          duration: 1000,
-          easing: "easeOutQuart"
-        },
-        layout: {
-          padding: {
-            left: 5,
-            right: 5,
-            top: 10,
-            bottom: 10
+        animation: { duration: 1000, easing: "easeOutQuart" },
+        layout: { padding: { left: 5, right: 120, top: 10, bottom: 10 } },
+
+        datasets: {
+          bar: {
+            barPercentage: 0.6,
+            categoryPercentage: 0.8
           }
         }
       }
+    },
+    meanTimePlugins() {
+      const slaTarget = 30
+      return [
+        {
+          id: "slaLabel",
+          afterDatasetsDraw(chart) {
+            const ctx = chart.ctx
+            const yAxis = chart.scales.y
+            const xAxis = chart.scales.x
+            if (!yAxis || !xAxis) return
+
+            const y = yAxis.getPixelForValue(slaTarget)
+            const chartRight = xAxis.right // end of chart area
+            const paddingRight = chart.width // full canvas width
+
+            ctx.save()
+
+            // ✅ draw dashed line from LEFT edge all the way to the label
+            ctx.beginPath()
+            ctx.setLineDash([6, 4])
+            ctx.strokeStyle = "#e74c3c"
+            ctx.lineWidth = 2
+            ctx.moveTo(xAxis.left, y)
+            ctx.lineTo(chartRight + 10, y) // extend 10px into padding
+            ctx.stroke()
+            ctx.setLineDash([]) // reset dash
+
+            // ✅ label pill drawn in the padding — starts 14px after chart ends
+            const px = chartRight + 14
+            const py = y - 9
+            const pw = 96
+            const ph = 18
+            const pr = 4
+
+            ctx.fillStyle = "#e74c3c"
+            ctx.beginPath()
+            ctx.moveTo(px + pr, py)
+            ctx.lineTo(px + pw - pr, py)
+            ctx.quadraticCurveTo(px + pw, py, px + pw, py + pr)
+            ctx.lineTo(px + pw, py + ph - pr)
+            ctx.quadraticCurveTo(px + pw, py + ph, px + pw - pr, py + ph)
+            ctx.lineTo(px + pr, py + ph)
+            ctx.quadraticCurveTo(px, py + ph, px, py + ph - pr)
+            ctx.lineTo(px, py + pr)
+            ctx.quadraticCurveTo(px, py, px + pr, py)
+            ctx.closePath()
+            ctx.fill()
+
+            // ✅ white text inside the pill
+            ctx.fillStyle = "#ffffff"
+            ctx.font = "bold 10px Cairo, sans-serif"
+            ctx.textAlign = "left"
+            ctx.fillText(`Target: ${slaTarget} days`, px + 8, y + 4)
+
+            ctx.restore()
+          }
+        }
+      ]
     }
   },
 
@@ -2954,22 +3039,9 @@ export default {
 
     async loadData() {
       try {
-        this.loading = true
-        await this.fetchCriticalities()
-        await this.fetchThirdParties()
-        //await this.fetchIndustries()
-        //await this.fetchRatings()
-        await this.fetchStatuses()
-        //await this.fetchIncidentTypes()
-        //await this.fetchPotentialRisks()
-        //await this.fetchOutsourceTypes()
-        // await this.fetchIncidents()
-        // await this.fetchOutsourceContracts()
-        // await this.fetchAggregateRiskLevels()
+        await Promise.all([this.fetchCriticalities(), this.fetchStatuses()])
       } catch (error) {
         console.error("Error loading dashboard data:", error)
-      } finally {
-        this.loading = false
       }
     },
     calculateIndustryCounts() {

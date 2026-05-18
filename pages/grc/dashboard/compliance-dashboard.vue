@@ -1695,7 +1695,7 @@ export default {
 .cards-grid-fixed {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
+  gap: 8px;
   margin-bottom: 20px;
 }
 

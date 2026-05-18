@@ -139,25 +139,50 @@
                 <div class="text-h6 text-center mb-3" style="color: #232757">
                   {{ $t("page.tasks_by_grc_domain") }}
                 </div>
-
-                <!-- GRC Legend -->
-                <v-row justify="center" class="mt-1 mb-3">
-                  <div class="grc-legend">
-                    <div class="legend-item">
-                      <span class="dot governance"></span>
-                      Governance
-                    </div>
-                    <div class="legend-item">
-                      <span class="dot risk"></span>
-                      Risk
-                    </div>
-                    <div class="legend-item">
-                      <span class="dot compliance"></span>
-                      Compliance
-                    </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+                  <!-- hint arrow points DOWN at the items below -->
+                  <div
+                    style="
+                      font-size: 11px;
+                      font-weight: 700;
+                      color: #d4a017;
+                      display: flex;
+                      align-items: center;
+                      gap: 4px;
+                    "
+                  >
+                    ▼ Click these to show / hide
                   </div>
-                </v-row>
-
+                  <!-- GRC Legend -->
+                  <v-row justify="center" class="mt-1 mb-3">
+                    <div class="grc-legend">
+                      <div
+                        class="legend-item"
+                        @click="toggleGovernance"
+                        :style="{ opacity: showGovernance ? 1 : 0.4, cursor: 'pointer' }"
+                      >
+                        <span class="dot governance"></span>
+                        Governance
+                      </div>
+                      <div
+                        class="legend-item"
+                        @click="toggleRisk"
+                        :style="{ opacity: showRisk ? 1 : 0.4, cursor: 'pointer' }"
+                      >
+                        <span class="dot risk"></span>
+                        Risk
+                      </div>
+                      <div
+                        class="legend-item"
+                        @click="toggleCompliance"
+                        :style="{ opacity: showCompliance ? 1 : 0.4, cursor: 'pointer' }"
+                      >
+                        <span class="dot compliance"></span>
+                        Compliance
+                      </div>
+                    </div>
+                  </v-row>
+                </div>
                 <Chart
                   :type="'bar'"
                   :chart-data="tasksDomainChartData"
@@ -259,7 +284,10 @@ export default {
       filters: {
         done: null
       },
-      receiver_id: null
+      receiver_id: null,
+      showGovernance: true,
+      showRisk: true,
+      showCompliance: true
     }
   },
 
@@ -394,6 +422,14 @@ export default {
     tasksDomainChartData() {
       const data = this.dashboardStats.tasks_by_domain || []
 
+      const filteredData = data.filter((i) => {
+        const name = i.name
+        if (name === "Policy" && this.showGovernance) return true
+        if ((name === "Risk" || name === "Treatment") && this.showRisk) return true
+        if ((name === "Audit" || name === "Audit Item") && this.showCompliance) return true
+        return false
+      })
+
       const DOMAIN_COLORS = {
         Policy: "#232757",
         Risk: "#eaa035",
@@ -403,12 +439,12 @@ export default {
       }
 
       return {
-        labels: data.map((i) => i.name || "Unknown"),
+        labels: filteredData.map((i) => i.name || "Unknown"),
         datasets: [
           {
             label: "Total Tasks",
-            data: data.map((i) => i.count || 0),
-            backgroundColor: data.map((i) => {
+            data: filteredData.map((i) => i.count || 0),
+            backgroundColor: filteredData.map((i) => {
               return DOMAIN_COLORS[i.name] || "#54689d"
             }),
             borderRadius: 6,
@@ -813,13 +849,46 @@ export default {
           status_id: statusId
         }
       })
+    },
+    toggleGovernance() {
+      if (this.showGovernance && !this.showRisk && !this.showCompliance) {
+        this.showGovernance = true
+        this.showRisk = true
+        this.showCompliance = true
+      } else {
+        this.showGovernance = true
+        this.showRisk = false
+        this.showCompliance = false
+      }
+    },
+    toggleRisk() {
+      if (!this.showGovernance && this.showRisk && !this.showCompliance) {
+        this.showGovernance = true
+        this.showRisk = true
+        this.showCompliance = true
+      } else {
+        this.showGovernance = false
+        this.showRisk = true
+        this.showCompliance = false
+      }
+    },
+    toggleCompliance() {
+      if (!this.showGovernance && !this.showRisk && this.showCompliance) {
+        this.showGovernance = true
+        this.showRisk = true
+        this.showCompliance = true
+      } else {
+        this.showGovernance = false
+        this.showRisk = false
+        this.showCompliance = true
+      }
     }
   }
 }
 </script>
 <style scoped>
 .legend-item {
-  cursor: default;
+  cursor: pointer;
   transition: opacity 0.2s ease;
 }
 

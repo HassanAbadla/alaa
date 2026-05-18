@@ -2053,7 +2053,8 @@ export default {
     asset_types: "Types d'actifs",
     asset_categories: "Catégories d’actifs",
     third_party_industries: "Industries des tiers",
-    third_party_criticality: "Criticité du tiers"
+    third_party_criticality: "Criticité du tiers",
+    incident_distribution_by_type: "Répartition des incidents par type"
   },
   field_info: {
     risk_description:

@@ -20,5 +20,6 @@
     "titleBar.inactiveBackground": "#1857a499",
     "titleBar.inactiveForeground": "#e7e7e799"
   },
-  "peacock.color": "#1857a4" // or "nested" if you're using nested keys
+  "peacock.color": "#1857a4",
+  "workbench.browser.openLocalhostLinks": false // or "nested" if you're using nested keys
 }

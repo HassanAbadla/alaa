@@ -1968,7 +1968,8 @@ export default {
     asset_types: "资产类型",
     asset_categories: "资产类别",
     third_party_industries: "第三方所属行业",
-    third_party_criticality: "第三方关键性"
+    third_party_criticality: "第三方关键性",
+    incident_distribution_by_type: "按类型划分的事件分布"
   },
   field_info: {
     risk_description:
