@@ -1959,6 +1959,7 @@ export default {
     third_parties_by_criticality: "按关键性划分的第三方",
     mean_time_to_resolve_per_third_party: "每个第三方的平均解决时间",
     click_to_drill_down: "点击以深入查看",
+    click_to_show_hide: "点击以显示 / 隐藏",
     number_of_open_and_closed_contracts: "开放和关闭合同的数量",
     risks_by_status: "按状态划分的风险",
     compliance_insights_dashboard: "合规洞察仪表板",
@@ -1969,7 +1970,19 @@ export default {
     asset_categories: "资产类别",
     third_party_industries: "第三方所属行业",
     third_party_criticality: "第三方关键性",
-    incident_distribution_by_type: "按类型划分的事件分布"
+    incident_distribution_by_type: "按类型划分的事件分布",
+    bcm_dashboard: "业务连续性管理（BCM）仪表板",
+    total_threats: "威胁总数",
+    average_rto_hours: "平均 RTO 小时数",
+    total_impacts: "影响总数",
+    threats_during_peak_time: "高峰时段的威胁",
+    threats_by_category: "按类别划分的威胁",
+    disruption_tolerance_by_recovery_time: "按恢复时间划分的中断容忍度",
+    impacts_by_severity_level: "按严重程度划分的影响",
+    recovery_time_downtime_thresholds_per_asset: "每项资产的恢复时间和停机阈值",
+    impacts_by_category: "按类别划分的影响",
+    threats_by_location: "按位置划分的威胁",
+    lower_is_better: "越低越好"
   },
   field_info: {
     risk_description:

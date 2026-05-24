@@ -2364,6 +2364,7 @@ export default {
     tasks_by_status: "المهام حسب الحالة",
     largest_percentage: "أكبر نسبة مئوية",
     click_to_drill_down: "انقر للتعمّق في التفاصيل",
+    click_to_show_hide: "انقر لإظهار / إخفاء",
     number_of_open_and_closed_contracts: "عدد العقود المفتوحة والمغلقة",
     risks_by_status: "المخاطر حسب الحالة",
     compliance_insights_dashboard: "لوحة رؤى الامتثال",
@@ -2374,7 +2375,19 @@ export default {
     asset_categories: "فئات الأصول",
     third_party_industries: "صناعات الأطراف الثالثة",
     third_party_criticality: "أهمية الطرف الثالث",
-    incident_distribution_by_type: "توزيع الحوادث حسب النوع"
+    incident_distribution_by_type: "توزيع الحوادث حسب النوع",
+    bcm_dashboard: "لوحة إدارة استمرارية الأعمال (BCM)",
+    total_threats: "عدد التهديدات",
+    average_rto_hours: "متوسط ساعات RTO",
+    total_impacts: "عدد التأثيرات",
+    threats_during_peak_time: " عدد التهديدات خلال أوقات الذروة",
+    threats_by_category: "التهديدات حسب الفئة",
+    disruption_tolerance_by_recovery_time: "قدرة المؤسسة على تحمّل الانقطاع مقارنه بوقت الاستعادة",
+    impacts_by_severity_level: "التأثيرات حسب مستوى الشدة",
+    recovery_time_downtime_thresholds_per_asset: " وقت الاستعادة وفترة التوقف لكل أصل",
+    impacts_by_category: "مستوى التأثير حسب التصنيف",
+    threats_by_location: "التهديدات حسب الموقع",
+    lower_is_better: "الأقل أفضل"
   },
   field_info: {
     risk_description:

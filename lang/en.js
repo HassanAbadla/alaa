@@ -2472,10 +2472,23 @@ export default {
     largest_percentage: "Largest Percentage",
     third_parties_by_incident: "Third Parties by Incident",
     click_to_drill_down: "Click to drill down",
+    click_to_show_hide: "Click these to show / hide",
     number_of_open_and_closed_contracts: "Number of Open and Closed Contracts",
     risks_by_status: "Risks by Status",
     compliance_insights_dashboard: "Compliance Insights Dashboard",
-    incident_distribution_by_type: "Incident Distribution by Type"
+    incident_distribution_by_type: "Incident Distribution by Type",
+    bcm_dashboard: "BCM Dashboard",
+    total_threats: "Total Threats",
+    average_rto_hours: "Average RTO Hours",
+    total_impacts: "Total Impacts",
+    threats_during_peak_time: "Threats During Peak Time",
+    threats_by_category: "Threats by Category",
+    disruption_tolerance_by_recovery_time: "Disruption Tolerance by Recovery Time",
+    impacts_by_severity_level: "Impacts by Severity Level",
+    recovery_time_downtime_thresholds_per_asset: "Recovery Time Downtime Thresholds per Asset",
+    impacts_by_category: "Impacts by Category",
+    threats_by_location: "Threats by Location",
+    lower_is_better: "Lower is Better"
   },
   field_info: {
     risk_description:

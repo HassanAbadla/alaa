@@ -1408,7 +1408,7 @@ export default {
 
       return {
         responsive: true,
-        maintainAspectRatio: false, // ✅ must be false so chart fills the dynamic height div
+        maintainAspectRatio: false, //  must be false so chart fills the dynamic height div
         indexAxis: "y",
 
         plugins: {

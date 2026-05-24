@@ -151,7 +151,7 @@
                       gap: 4px;
                     "
                   >
-                    ▼ Click these to show / hide
+                    ▼ {{ $t("page.click_to_show_hide") }}
                   </div>
                   <!-- GRC Legend -->
                   <v-row justify="center" class="mt-1 mb-3">

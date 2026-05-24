@@ -2044,6 +2044,7 @@ export default {
     third_parties_by_criticality: "Tiers par criticité",
     mean_time_to_resolve_per_third_party: "Temps moyen de résolution par tiers",
     click_to_drill_down: "Cliquez pour explorer les détails",
+    click_to_show_hide: "Cliquez pour afficher / masquer",
     number_of_open_and_closed_contracts: "Nombre de contrats ouverts et fermés",
     risks_by_status: "Risques par statut",
     compliance_insights_dashboard: "Tableau de bord des analyses de conformité",
@@ -2054,7 +2055,19 @@ export default {
     asset_categories: "Catégories d’actifs",
     third_party_industries: "Industries des tiers",
     third_party_criticality: "Criticité du tiers",
-    incident_distribution_by_type: "Répartition des incidents par type"
+    incident_distribution_by_type: "Répartition des incidents par type",
+    bcm_dashboard: "Tableau de bord BCM (Gestion de la continuité des activités)",
+    total_threats: "Nombre total de menaces",
+    average_rto_hours: "Moyenne des heures RTO",
+    total_impacts: "Impacts totaux",
+    threats_during_peak_time: "Menaces pendant les heures de pointe",
+    threats_by_category: "Menaces par catégorie",
+    disruption_tolerance_by_recovery_time: "Tolérance aux interruptions par temps de reprise",
+    impacts_by_severity_level: "Impacts par niveau de gravité",
+    recovery_time_downtime_thresholds_per_asset: "Seuils de temps de reprise et d’arrêt par actif",
+    impacts_by_category: "Impacts par catégorie",
+    threats_by_location: "Menaces par emplacement",
+    lower_is_better: "Plus bas est meilleur"
   },
   field_info: {
     risk_description:

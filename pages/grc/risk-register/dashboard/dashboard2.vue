@@ -161,8 +161,8 @@
             >
               <span :style="{
                 display: 'inline-block',
-                width: '14px',
-                height: '14px',
+                width: '12px',
+                height: '12px',
                 marginRight: '6px',
                 borderRadius: '50%',
                 flexShrink: 0,
@@ -214,8 +214,8 @@
             >
               <span :style="{
                 display: 'inline-block',
-                width: '14px',
-                height: '14px',
+                width: '12px',
+                height: '12px',
                 marginRight: '6px',
                 borderRadius: '50%',
                 flexShrink: 0,
@@ -240,7 +240,7 @@
      <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
 
     <div style="font-size:11px; font-weight:700; color:#d4a017; display:flex; align-items:center; gap:4px;">
-      ▼ Click these to show / hide
+     ▼ {{ $t("page.click_to_show_hide") }}
     </div>
 
   <div class="grc-legend">
@@ -303,8 +303,8 @@
             >
               <span :style="{
                 display: 'inline-block',
-                width: '14px',
-                height: '14px',
+                width: '12px',
+                height: '12px',
                 marginRight: '6px',
                 borderRadius: '50%',
                 flexShrink: 0,
@@ -363,8 +363,8 @@
             <span
               :style="{
                 display: 'inline-block',
-                width: '14px',
-                height: '14px',
+                width: '12px',
+                height: '12px',
                 marginRight: '6px',
                 borderRadius: '50%',
                   flexShrink: 0,
@@ -494,8 +494,8 @@
             <span
               :style="{
                 display: 'inline-block',
-                width: '14px',
-                height: '14px',
+                width: '12px',
+                height: '12px',
                 marginRight: '6px',
                 borderRadius: '50%',
                 flexShrink: 0,

@@ -20,7 +20,7 @@
             elevation="3"
             style="border-radius: 14px; height: 72px"
           >
-            <div class="text-h5 font-weight-bold flex-grow-1">BCM Dashboard</div>
+            <div class="text-h5 font-weight-bold flex-grow-1">{{ $t("page.bcm_dashboard") }}</div>
             <v-img :src="logo" max-width="110" max-height="60" contain />
           </v-card>
         </v-col>
@@ -82,7 +82,7 @@
                 style="height: 350px; border-radius: 12px; position: relative"
               >
                 <div class="text-h6 text-center mb-2" style="color: #232757; font-weight: bold">
-                  Threats by Category
+                  {{ $t("page.threats_by_category") }}
                 </div>
                 <div class="d-flex flex-grow-1 justify-center" style="align-items: center; padding-bottom: 25px">
                   <!-- Pie Chart -->
@@ -124,21 +124,20 @@
               </v-card>
             </v-col>
 
-            <!-- Threats by Location (BAR) -->
+            <!-- Disruption Tolerance by Recovery Time -->
             <v-col cols="12" md="4">
               <v-card class="pa-4 d-flex flex-column" outlined style="height: 350px; border-radius: 12px">
-                <div class="text-h6 text-center mb-2" style="color: #232757; font-weight: bold">
-                  Threats by Location
+                <div class="text-h6 text-center mb-3" style="color: #232757; font-weight: bold">
+                  {{ $t("page.disruption_tolerance_by_recovery_time") }}
                 </div>
-                <div style="flex: 1">
-                  <Chart
-                    :type="'bar'"
-                    :chart-data="threatsByLocationChartData"
-                    :chart-options="threatsByLocationChartOptions"
-                    :chart-height="280"
-                    :chart-width="'100%'"
-                  />
-                </div>
+
+                <Chart
+                  :type="'bar'"
+                  :chart-data="distributionTimesChartData"
+                  :chart-options="distributionTimesChartOptions"
+                  :chart-height="400"
+                  :chart-width="'100%'"
+                />
               </v-card>
             </v-col>
 
@@ -150,7 +149,7 @@
                 style="height: 350px; border-radius: 12px; position: relative"
               >
                 <div class="text-h6 text-center mb-2" style="color: #232757; font-weight: bold">
-                  Impacts by Severity Level
+                  {{ $t("page.impacts_by_severity_level") }}
                 </div>
 
                 <div class="d-flex flex-grow-1 justify-center" style="align-items: center; padding-bottom: 25px">
@@ -196,58 +195,15 @@
 
           <!-- ROW 2: CHART 4 + CHART 5 -->
           <v-row dense class="g-3 mt-2">
-            <!-- (HORIZONTAL BAR) -->
-            <v-col cols="12" md="5">
-              <v-card class="pa-4 d-flex flex-column" outlined style="height: 350px; border-radius: 12px">
-                <!-- <div class="text-h6 text-center mb-3" style="color: #232757; font-weight: bold">
-                  Maximum Tolerable Period of Disruption (MTPD) by Asset
-                </div>
-                <div style="flex: 1; overflow-y: auto; overflow-x: hidden">
-                  <Chart
-                    :type="'bar'"
-                    :chart-data="mtpdByAssetChartData"
-                    :chart-options="mtpdByAssetChartOptions"
-                    :chart-height="400"
-                    :chart-width="'100%'"
-                  />
-                </div> -->
-
-                <!-- <div class="text-h6 text-center mb-3" style="color: #232757; font-weight: bold">
-                  Threats by Recovery Code
-                </div>
-                <div style="flex: 1; overflow-y: auto; overflow-x: hidden">
-                  <Chart
-                    :type="'bar'"
-                    :chart-data="threatsByRecoveryCodeChartData"
-                    :chart-options="threatsByRecoveryCodeChartOptions"
-                    :chart-height="400"
-                    :chart-width="'100%'"
-                  />
-                </div> -->
-                <div class="text-h6 text-center mb-3" style="color: #232757; font-weight: bold">
-                  Recovery Time Distribution by Code
-                </div>
-                <div style="flex: 1; overflow-y: auto; overflow-x: hidden">
-                  <Chart
-                    :type="'bar'"
-                    :chart-data="distributionTimesChartData"
-                    :chart-options="distributionTimesChartOptions"
-                    :chart-height="400"
-                    :chart-width="'100%'"
-                  />
-                </div>
-              </v-card>
-            </v-col>
-
             <!-- RTO vs MTPD -->
-            <v-col cols="12" md="7">
+            <v-col cols="12" md="5">
               <v-card
                 class="pa-4 d-flex flex-column"
                 outlined
                 style="height: 350px; border-radius: 12px; position: relative; overflow: hidden"
               >
                 <div class="text-h6 text-center mb-3" style="color: #232757; font-weight: bold">
-                  Recovery Time & Downtime Thresholds per Asset
+                  {{ $t("page.recovery_time_downtime_thresholds_per_asset") }}
                 </div>
 
                 <v-row justify="center" class="mt-0 mb-2">
@@ -262,7 +218,7 @@
                         gap: 4px;
                       "
                     >
-                      ▼ Click these to show / hide
+                      ▼ {{ $t("page.click_to_show_hide") }}
                     </div>
                     <div class="grc-legend">
                       <div
@@ -293,6 +249,98 @@
                     :chart-data="rtoVsMtpdChartData"
                     :chart-options="rtoVsMtpdChartOptions"
                     :chart-height="'100%'"
+                    :chart-width="'100%'"
+                  />
+                </div>
+              </v-card>
+            </v-col>
+            <!-- Impacts by Category -->
+            <v-col cols="12" md="4">
+              <v-card
+                class="pa-4 d-flex flex-column"
+                outlined
+                style="height: 350px; border-radius: 12px; position: relative"
+              >
+                <div class="text-h6 text-center mb-2" style="color: #232757; font-weight: bold">
+                  {{ $t("page.impacts_by_category") }}
+                </div>
+
+                <div class="d-flex flex-grow-1 justify-center" style="align-items: center; padding-bottom: 25px">
+                  <!-- Pie Chart — same size as Threats by Category -->
+                  <div class="flex-shrink-0 d-flex align-center justify-center" style="width: 250px; height: 220px">
+                    <Chart
+                      :type="'pie'"
+                      :chart-data="impactsByCategoryChartData"
+                      :chart-options="impactsByCategoryChartOptions"
+                      :chart-height="220"
+                      :chart-width="190"
+                    />
+                  </div>
+
+                  <!-- Custom Legend — same as Threats by Category -->
+                  <div class="flex-grow-1" style="margin-left: 18px; overflow-y: auto; max-height: 190px">
+                    <ul style="list-style: none; padding: 0; margin: 0">
+                      <li
+                        v-for="(label, index) in impactsByCategoryChartData.labels"
+                        :key="index"
+                        class="d-flex align-center mb-2"
+                      >
+                        <span
+                          :style="{
+                            width: '12px',
+                            height: '12px',
+                            borderRadius: '50%',
+                            marginRight: '6px',
+                            flexShrink: 0,
+                            backgroundColor: impactsByCategoryChartData.datasets[0].backgroundColor[index]
+                          }"
+                        ></span>
+                        <span style="font-size: 12px; color: #666">
+                          {{ label }}: {{ impactsByCategoryChartData.datasets[0].data[index] }}
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </v-card>
+            </v-col>
+            <!-- (HORIZONTAL BAR) -->
+            <v-col cols="12" md="3">
+              <v-card class="pa-4 d-flex flex-column" outlined style="height: 350px; border-radius: 12px">
+                <!-- <div class="text-h6 text-center mb-3" style="color: #232757; font-weight: bold">
+                  Maximum Tolerable Period of Disruption (MTPD) by Asset
+                </div>
+                <div style="flex: 1; overflow-y: auto; overflow-x: hidden">
+                  <Chart
+                    :type="'bar'"
+                    :chart-data="mtpdByAssetChartData"
+                    :chart-options="mtpdByAssetChartOptions"
+                    :chart-height="400"
+                    :chart-width="'100%'"
+                  />
+                </div> -->
+
+                <!-- <div class="text-h6 text-center mb-3" style="color: #232757; font-weight: bold">
+                  Threats by Recovery Code
+                </div>
+                <div style="flex: 1; overflow-y: auto; overflow-x: hidden">
+                  <Chart
+                    :type="'bar'"
+                    :chart-data="threatsByRecoveryCodeChartData"
+                    :chart-options="threatsByRecoveryCodeChartOptions"
+                    :chart-height="400"
+                    :chart-width="'100%'"
+                  />
+                </div> -->
+                <div class="text-h6 text-center mb-2" style="color: #232757; font-weight: bold">
+                  {{ $t("page.threats_by_location") }}
+                </div>
+                <div style="flex: 1">
+                  <Chart
+                    :type="'bar'"
+                    :chart-data="threatsByLocationChartData"
+                    :chart-options="threatsByLocationChartOptions"
+                    :chart-height="280"
                     :chart-width="'100%'"
                   />
                 </div>
@@ -358,20 +406,20 @@ export default {
       const stats = this.dashboardStats || {}
       return [
         {
-          title: "Total Threats",
+          title: this.$t("page.total_threats"),
           value: stats.total_threats || 0
         },
         {
-          title: "Average RTO (Hours)",
+          title: this.$t("page.average_rto_hours"),
           value: stats.average_rto_hours != null ? Math.round(stats.average_rto_hours) : 0,
-          note: "Lower is better"
+          note: this.$t("page.lower_is_better")
         },
         {
-          title: "Total Impacts",
+          title: this.$t("page.total_impacts"),
           value: stats.total_impacts || 0
         },
         {
-          title: "Threats During Peak Time",
+          title: this.$t("page.threats_during_peak_time"),
           value: stats.threats_during_peak_time || 0
         }
       ]
@@ -765,7 +813,7 @@ export default {
     //     .slice()
     //     .sort((a, b) => b.count - a.count)
 
-    //   // ✅ Combine code + type to avoid duplicate labels
+    //   // Combine code + type to avoid duplicate labels
     //   const labels = data.map((i) => `${i.code} (${i.type})`)
     //   const values = data.map((i) => i.count)
 
@@ -870,69 +918,50 @@ export default {
     //     }
     //   }
     // },
-    // ── Distribution Times by Code (Horizontal Bar) ─────────────────
+
+    // ── Disruption Tolerance Window by Recovery Code (Floating Bar) ─────────────────
     distributionTimesChartData() {
       const data = ((this.dashboardStats || {}).distribution_times || [])
         .slice()
-        .sort((a, b) => b.to_hours - a.to_hours)
-
-      const labels = data.map((i) => i.code)
-
-      // Bar length = difference between from and to
-      const values = data.map((i) => i.to_hours - i.from_hours)
+        // Sort by to_hours descending — biggest range on top
+        .sort((a, b) => b.to_hours - b.from_hours - (a.to_hours - a.from_hours))
 
       return {
-        labels,
+        labels: data.map((i) => i.code),
         datasets: [
           {
-            label: "Allowed Disruption Time",
-            data: values,
-
-            // Store original values for tooltip
-            originalFrom: data.map((i) => i.from_hours),
-            originalTo: data.map((i) => i.to_hours),
-
-            // Take colors directly from API
+            label: "Disruption Tolerance Window",
+            data: data.map((i) => [i.from_hours, i.to_hours]), //floating bar
             backgroundColor: data.map((i) => i.color || "#54689d"),
-
             borderWidth: 0,
-            maxBarThickness: 28
+            borderRadius: 4,
+            borderSkipped: false,
+            maxBarThickness: 80
           }
         ]
       }
     },
-
     distributionTimesChartOptions() {
-      const dataValues = this.distributionTimesChartData.datasets[0].data
-      const maxValue = Math.max(...dataValues)
-      const integerTicks = Array.from({ length: Math.ceil(maxValue) + 1 }, (_, i) => i)
+      const allData = (this.dashboardStats || {}).distribution_times || []
+      const maxValue = allData.length ? Math.max(...allData.map((i) => i.to_hours)) : 60
 
       return {
         responsive: true,
         maintainAspectRatio: false,
-        indexAxis: "y",
+        indexAxis: "y", // Back to horizontal
 
         plugins: {
           legend: { display: false },
-
           datalabels: { display: false },
-
           tooltip: {
             callbacks: {
-              title: (tooltipItems) => `Code: ${tooltipItems[0].label}`,
-
+              title: (tooltipItems) => `${tooltipItems[0].label}`,
               label: (context) => {
-                const dataset = context.dataset
-                const index = context.dataIndex
-
-                const from = dataset.originalFrom[index]
-                const to = dataset.originalTo[index]
-
-                return `Range: ${from}h → ${to}h`
+                const [from, to] = context.raw
+                return `Window: ${from}h → ${to}h`
               }
             },
-
-            backgroundColor: "rgba(0, 0, 0, 0.8)",
+            backgroundColor: "rgba(0,0,0,0.8)",
             titleColor: "#fff",
             bodyColor: "#fff",
             borderColor: "#232757",
@@ -942,100 +971,163 @@ export default {
 
         scales: {
           x: {
-            beginAtZero: true,
-
+            min: 0, //  Always start from 0
+            max: maxValue + 5,
             ticks: {
-              stepSize: 1,
-
-              callback: function (value) {
-                return integerTicks.includes(value) ? value : null
-              },
-
-              font: { size: 11 }
+              stepSize: 10, // Clean steps
+              font: { size: 11 },
+              color: "#555"
             },
-
-            grid: { color: "#e0e0e0" }
+            grid: { color: "#e0e0e0" },
+            title: {
+              display: true,
+              text: "Hours",
+              font: { size: 11 },
+              color: "#888"
+            }
           },
-
           y: {
-            ticks: { font: { size: 11 } },
-
+            ticks: {
+              font: { size: 11 },
+              color: "#333"
+            },
             grid: { display: false }
           }
         },
 
         elements: {
           bar: {
-            borderRadius: {
-              topLeft: 0,
-              bottomLeft: 0,
-              topRight: 4,
-              bottomRight: 4
-            },
-            borderSkipped: false
+            borderRadius: 4,
+            borderSkipped: false // Critical for floating bars
           }
         },
+
         datasets: {
           bar: {
-            barPercentage: 0.6,
-            categoryPercentage: 0.8,
-            maxBarThickness: 30
+            barPercentage: 0.5,
+            categoryPercentage: 0.7,
+            maxBarThickness: 80
           }
         }
       }
     },
+    impactsByCategoryChartData() {
+      const data = (this.dashboardStats || {}).impacts_by_category || []
+      return {
+        labels: data.map((i) => i.category_name),
+        datasets: [
+          {
+            data: data.map((i) => i.count),
+            backgroundColor: data.map((i) => i.color || "#54689d")
+          }
+        ]
+      }
+    },
+    impactsByCategoryChartOptions() {
+      return {
+        responsive: true,
+        maintainAspectRatio: false,
+        hoverOffset: 10,
+        layout: { padding: 10 },
+        clip: false,
+        plugins: {
+          legend: { display: false },
+          datalabels: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (context) => {
+                const value = context.raw || 0
+                const total = context.dataset.data.reduce((a, b) => a + b, 0)
+                const perc = total ? ((value / total) * 100).toFixed(1) : 0
+                return `${context.label}: ${value} (${perc}%)`
+              },
+              title: (tooltipItems) => {
+                return `Category: ${tooltipItems[0].label}`
+              }
+            },
+            backgroundColor: "rgba(0, 0, 0, 0.8)",
+            titleColor: "#fff",
+            bodyColor: "#fff",
+            borderColor: "#232757",
+            borderWidth: 1
+          }
+        },
+        elements: {
+          arc: { borderWidth: 0, borderColor: "#ffffff" }
+        }
+      }
+    },
+
     // ── RTO vs MTPD per Asset (Side by side Bar) ───────────────────────────────
+
     rtoVsMtpdChartData() {
       const data = (this.dashboardStats || {}).rto_vs_mrpd_by_asset || []
-      const labels = data.map((i) => i.asset_name)
+
+      // Truncate long names for display
+      const labels = data.map((i) => {
+        const name = i.asset_name || ""
+        return name.length > 12 ? name.substring(0, 12) + "…" : name
+      })
+
+      const fullLabels = data.map((i) => i.asset_name || "") // keep full for tooltip
       const rtoData = data.map((i) => i.rto_hours)
-      const rpoData = data.map((i) => i.mrpd_hours) // this is MTPD
+      const rpoData = data.map((i) => i.mrpd_hours)
 
       const datasets = []
 
-      // RTO dataset
       if (this.showRTO) {
         datasets.push({
           label: "RTO",
           data: rtoData,
           backgroundColor: "#232757",
-          borderWidth: 0
+          borderWidth: 0,
+          borderRadius: 4,
+          borderSkipped: "bottom"
         })
       }
 
-      // MTPD dataset
       if (this.showRPO) {
-        datasets.push({ label: "MTPD", data: rpoData, backgroundColor: "#54689d", borderWidth: 0 })
+        datasets.push({
+          label: "MTPD",
+          data: rpoData,
+          backgroundColor: "#54689d",
+          borderWidth: 0,
+          borderRadius: 4,
+          borderSkipped: "bottom"
+        })
       }
 
-      return {
-        labels,
-        datasets
-      }
+      return { labels, datasets, fullLabels }
     },
-
     rtoVsMtpdChartOptions() {
-      const data = (this.dashboardStats || {}).threats_by_recovery_code || []
-      const typeMap = {}
-      data.forEach((i) => {
-        typeMap[i.code] = i.type
-      })
+      const data = (this.dashboardStats || {}).rto_vs_mrpd_by_asset || []
+      const fullLabels = data.map((i) => i.asset_name || "")
 
       return {
         responsive: true,
         maintainAspectRatio: false,
+        // No indexAxis — vertical bars (default)
         scales: {
           y: {
-            stacked: false,
-            display: true,
             beginAtZero: true,
-            ticks: { stepSize: 1, font: { size: 12 } },
-            grid: { color: "#e0e0e0", drawBorder: false }
+            ticks: {
+              stepSize: 1,
+              font: { size: 11 },
+              color: "#333"
+            },
+            grid: {
+              color: "#e0e0e0",
+              drawBorder: false
+            }
           },
           x: {
-            stacked: false,
-            display: true,
-            ticks: { font: { size: 11 } },
+            ticks: {
+              font: { size: 10 },
+              color: "#333",
+              maxRotation: 0, // keep labels horizontal
+              minRotation: 0,
+              autoSkip: false
+            },
             grid: { display: false }
           }
         },
@@ -1044,18 +1136,22 @@ export default {
           datalabels: { display: false },
           tooltip: {
             callbacks: {
-              title: (tooltipItems) => `Code: ${tooltipItems[0].label}`,
-              label: (ctx) => {
-                const code = ctx.label
-                const type = typeMap[code] || ""
-                return `${type}: ${ctx.raw}`
-              }
-            }
+              // Show full asset name in tooltip title
+              title: (tooltipItems) => {
+                const idx = tooltipItems[0].dataIndex
+                return fullLabels[idx] || tooltipItems[0].label
+              },
+              label: (ctx) => `${ctx.dataset.label}: ${ctx.raw} hrs`
+            },
+            backgroundColor: "rgba(0,0,0,0.8)",
+            titleColor: "#fff",
+            bodyColor: "#fff",
+            borderColor: "#232757",
+            borderWidth: 1
           }
         },
         elements: {
           bar: {
-            borderWidth: 0,
             borderRadius: { topLeft: 4, topRight: 4 },
             borderSkipped: "bottom"
           }

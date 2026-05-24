@@ -39,24 +39,28 @@
             class="pa-3 text-center d-flex flex-column justify-center"
             style="height: 100px; border-radius: 12px; min-width: 0; position: relative"
           >
-            <div class="text-subtitle-1 font-weight" style="font-size: 14px; line-height: 1.2; color: #232757">
+            <div
+              class="text-subtitle-1 font-weight mb-2"
+              style="font-size: 14px; line-height: 1.2; color: #232757; margin-top: -12px"
+            >
               {{ item.title }}
             </div>
+
             <div class="text-h5 font-weight-bold" style="color: #54689d; font-size: 20px">
               {{ item.value }}
             </div>
 
-            <!-- Conditional Comment / Annotation -->
+            <!-- Conditional Comment — Total Number of Incidents -->
             <div
               v-if="item.title === $t('page.total_number_of_incidents')"
               class="text-caption d-flex align-center justify-center"
               style="
                 font-size: 12px;
-                color: #666;
                 position: absolute;
                 bottom: 0px;
                 left: 50%;
                 transform: translateX(-50%);
+                white-space: nowrap;
               "
             >
               <span style="color: #e74c3c; margin-right: 4px">▼</span>
@@ -65,16 +69,17 @@
               </span>
             </div>
 
+            <!-- Conditional Comment — Total Potential Risks -->
             <div
               v-if="item.title === $t('page.total_potential_risks')"
               class="text-caption d-flex align-center justify-center"
               style="
                 font-size: 12px;
-                color: #666;
                 position: absolute;
                 bottom: 0px;
                 left: 50%;
                 transform: translateX(-50%);
+                white-space: nowrap;
               "
             >
               <span style="color: #e74c3c; margin-right: 4px">▼</span>
@@ -144,8 +149,8 @@
                     >
                       <span
                         :style="{
-                          width: '14px',
-                          height: '14px',
+                          width: '12px',
+                          height: '12px',
                           borderRadius: '50%',
                           marginRight: '6px',
                           flexShrink: 0,
@@ -185,7 +190,7 @@
             <div class="text-h6 text-center mb-2" style="color: #232757">
               {{ $t("page.incident_trend_over_time") }}
             </div>
-            <!-- ✅ ADD ONLY THIS BLOCK -->
+            <!-- ADD ONLY THIS BLOCK -->
             <!-- <div class="d-flex justify-center align-center mb-2" style="gap: 20px">
               <div class="text-center">
                 <div style="font-size: 18px; font-weight: 700; color: #e74c3c">
@@ -212,7 +217,7 @@
                 <div style="font-size: 11px; color: #888">{{ $t("page.peak_month") }}</div>
               </div>
             </div> -->
-            <!-- ✅ END OF NEW BLOCK -->
+            <!--  END OF NEW BLOCK -->
             <Chart
               :type="'line'"
               :chart-data="incidentTrendChartData"
@@ -306,8 +311,8 @@
                     >
                       <span
                         :style="{
-                          width: '14px',
-                          height: '14px',
+                          width: '12px',
+                          height: '12px',
                           borderRadius: '50%',
                           marginRight: '6px',
                           flexShrink: 0,
@@ -398,8 +403,8 @@
                     >
                       <span
                         :style="{
-                          width: '14px',
-                          height: '14px',
+                          width: '12px',
+                          height: '12px',
                           borderRadius: '50%',
                           marginRight: '6px',
                           flexShrink: 0,
@@ -491,8 +496,8 @@
                     >
                       <span
                         :style="{
-                          width: '14px',
-                          height: '14px',
+                          width: '12px',
+                          height: '12px',
                           borderRadius: '50%',
                           marginRight: '6px',
                           flexShrink: 0,
@@ -549,8 +554,8 @@
                     <li v-for="(label, index) in ratingChartData.labels" :key="index" class="d-flex align-center mb-2">
                       <span
                         :style="{
-                          width: '14px',
-                          height: '14px',
+                          width: '12px',
+                          height: '12px',
                           borderRadius: '50%',
                           marginRight: '6px',
                           flexShrink: 0,
@@ -621,8 +626,8 @@
                     >
                       <span
                         :style="{
-                          width: '14px',
-                          height: '14px',
+                          width: '12px',
+                          height: '12px',
                           borderRadius: '50%',
                           marginRight: '6px',
                           flexShrink: 0,
@@ -2853,8 +2858,8 @@ export default {
             backgroundColor,
             borderColor: "transparent",
             borderWidth: 0,
-            borderRadius: 4
-            //maxBarThickness: 30
+            borderRadius: 4,
+            maxBarThickness: 30
           }
           // {
           //   // red dashed line across all bars
@@ -2917,8 +2922,8 @@ export default {
             title: {
               display: true,
               text: "Days",
-              font: { size: 12, weight: "bold" },
-              color: "#232757"
+              font: { size: 12 },
+              color: "#666"
             },
             ticks: { stepSize: 1, font: { size: 12 }, color: "#666" },
             grid: { color: "rgba(0, 0, 0, 0.1)", drawBorder: false }
@@ -2952,7 +2957,7 @@ export default {
 
             ctx.save()
 
-            // ✅ draw dashed line from LEFT edge all the way to the label
+            // draw dashed line from LEFT edge all the way to the label
             ctx.beginPath()
             ctx.setLineDash([6, 4])
             ctx.strokeStyle = "#e74c3c"
@@ -2962,7 +2967,7 @@ export default {
             ctx.stroke()
             ctx.setLineDash([]) // reset dash
 
-            // ✅ label pill drawn in the padding — starts 14px after chart ends
+            // label pill drawn in the padding — starts 14px after chart ends
             const px = chartRight + 14
             const py = y - 9
             const pw = 96
@@ -2983,7 +2988,7 @@ export default {
             ctx.closePath()
             ctx.fill()
 
-            // ✅ white text inside the pill
+            // white text inside the pill
             ctx.fillStyle = "#ffffff"
             ctx.font = "bold 10px Cairo, sans-serif"
             ctx.textAlign = "left"
