@@ -689,6 +689,7 @@ export default {
       //  load rest silently in background
       Promise.all([
         this.fetchIndustries(),
+        this.fetchOfferings(),
         this.fetchRatings(),
         this.fetchIncidentTypes(),
         this.fetchPotentialRisks(),
@@ -708,8 +709,9 @@ export default {
     ...mapGetters("tprmCriticalities", ["getCriticalities"]),
     ...mapGetters("tprmThirdParties", ["getThirdParties", "getDashboardData"]),
     ...mapGetters("tprmIndustries", ["getIndustries"]),
+    ...mapGetters("tprmOfferings", ["getOfferings"]),
     ...mapGetters("tprmRatings", ["getRatings"]),
-    ...mapGetters("tprmRatings", ["getRatings"]),
+    //...mapGetters("tprmRatings", ["getRatings"]),
     ...mapGetters("tprmStatuses", ["getStatuses"]),
     ...mapGetters("tprmIncidentTypes", ["getIncidentTypes"]),
     ...mapGetters("tprmPotentialRisks", ["getPotentialRisks", "isLoading"]),
@@ -732,7 +734,7 @@ export default {
         },
         {
           title: this.$t("page.total_number_of_offerings"),
-          value: this.getRatings.length || 0
+          value: this.getOfferings.length || 0
         },
         {
           title: this.$t("page.total_number_of_incidents"),
@@ -3005,6 +3007,7 @@ export default {
     ...mapActions("tprmCriticalities", ["fetchCriticalities"]),
     ...mapActions("tprmThirdParties", ["fetchThirdParties", "fetchDashboardData"]),
     ...mapActions("tprmIndustries", ["fetchIndustries"]),
+    ...mapActions("tprmOfferings", ["fetchOfferings"]),
     ...mapActions("tprmRatings", ["fetchRatings"]),
     ...mapActions("tprmStatuses", ["fetchStatuses"]),
     ...mapActions("tprmIncidentTypes", ["fetchIncidentTypes"]),

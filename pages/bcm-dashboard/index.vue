@@ -971,26 +971,38 @@ export default {
 
         scales: {
           x: {
-            min: 0, //  Always start from 0
+            min: 0,
             max: maxValue + 5,
+
+            title: {
+              display: true,
+              text: "Tolerance Level",
+              font: { size: 12 },
+              color: "#666"
+            },
+
             ticks: {
-              stepSize: 10, // Clean steps
+              stepSize: 10,
               font: { size: 11 },
               color: "#555"
             },
-            grid: { color: "#e0e0e0" },
+
+            grid: { color: "#e0e0e0" }
+          },
+
+          y: {
             title: {
               display: true,
-              text: "Hours",
-              font: { size: 11 },
-              color: "#888"
-            }
-          },
-          y: {
+              text: "Recovery Time",
+              font: { size: 12 },
+              color: "#666"
+            },
+
             ticks: {
               font: { size: 11 },
               color: "#333"
             },
+
             grid: { display: false }
           }
         },

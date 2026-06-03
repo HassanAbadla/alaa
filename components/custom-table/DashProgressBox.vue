@@ -143,6 +143,7 @@ export default {
     info: { type: String, default: null },
     showChartInstructions: { type: Boolean, default: false },
     centerContent: { type: Boolean, default: false },
+    hideTemplateLegend: { type: Boolean, default: false },
 
     /* LEGEND */
     legendScrollable: { type: Boolean, default: false },
@@ -161,6 +162,7 @@ export default {
   data() {
     return {
       chartComponentKey: 0,
+      previousChartData: null,
       selectedStatId: null
     }
   },
@@ -181,19 +183,7 @@ export default {
     },
 
     chartColors() {
-      // No selection → normal behavior
-      if (!this.selectedStatId) {
-        return this.stats.map((item) => item.color)
-      }
-
-      // Find selected stat
-      const selected = this.stats.find((s) => s.id === this.selectedStatId)
-      if (!selected) {
-        return this.stats.map((item) => item.color)
-      }
-
-      // Make ALL slices the selected color
-      return this.stats.map(() => selected.color)
+      return this.stats.map((item) => item.color)
     },
 
     groupedDatasets() {
@@ -219,7 +209,7 @@ export default {
           {
             data: this.chartValues,
             backgroundColor: this.chartColors,
-            hoverBackgroundColor: this.chartColors, 
+            hoverBackgroundColor: this.chartColors,
             borderWidth: 0
           }
         ]
@@ -230,25 +220,75 @@ export default {
       return {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
+        animation: { duration: 750 },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            enabled: true,
+            callbacks: {
+              label: (context) => {
+                const label = context.dataset.label || context.label || ""
+                const value = context.raw || 0
+                return `${label}: ${value}`
+              }
+            }
+          }
+        },
         onClick: this.handleChartClick
+      }
+    }
+  },
+  watch: {
+    chartValues: {
+      deep: true,
+      handler(newVal, oldVal) {
+        if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
+          this.updateChart()
+        }
+      }
+    },
+    chartLabels: {
+      deep: true,
+      handler(newVal, oldVal) {
+        if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
+          this.updateChart()
+        }
+      }
+    },
+    selectedFilterId: {
+      immediate: true,
+      handler(newVal) {
+        this.selectedStatId = newVal
+      }
+    },
+    stats: {
+      deep: true,
+      handler() {
+        this.updateChart()
       }
     }
   },
 
   methods: {
+    updateChart() {
+      const currentData = JSON.stringify(this.chartData)
+      if (this.previousChartData !== currentData) {
+        this.chartComponentKey++
+        this.previousChartData = currentData
+      }
+    },
+
     handleStatClick(stat) {
       const deselect = this.selectedStatId === stat.id
       this.selectedStatId = deselect ? null : stat.id
-
-      // force chart redraw
-      this.chartComponentKey++
 
       this.$emit("filter-change", {
         filterType: this.filterType,
         filterId: deselect ? null : stat.id,
         statName: stat.name
       })
+
+      this.updateChart()
     },
 
     handleChartClick(_, elements) {
